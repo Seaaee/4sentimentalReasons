@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>右拉</title>
+    <style>
+        body,div,span{
+            margin:0;padding:0;
+        }
+        #div1{
+            width:200px;height:260px;
+            background: red;
+            position: relative;
+            left:-200px;
+            top:0;
+        }
+        #div1 span{
+            text-align: center;font-size:21px ;
+            width:35px ;height:100px;line-height:25px ;
+            background:#FFCCCC;
+            position:absolute;
+            left:200px;top:75px;
+        }
+    </style>
+    <script>
+        window.onload=function(){
+            var oDiv=document.getElementById('div1');
+            oDiv.onmouseover=function(){Move(0);}
+            oDiv.onmouseout=function(){Move(-200);}
+        }
+        var timer=null;
+        function Move(max){
+            clearInterval(timer);
+            timer=setInterval(function(){
+                var oDiv=document.getElementById('div1');
+                var speed=0;
+                if(max==0){speed=Math.ceil((max-oDiv.offsetLeft)/17);}
+                else{speed=Math.floor((max-oDiv.offsetLeft)/17);}
+                if(oDiv.offsetLeft==max){clearInterval(timer);}
+                else{oDiv.style.left=oDiv.offsetLeft+speed+'px';}
+            },10)
+        }
+    </script>
+</head>
+<body>
+<div id="div1">
+    <span>来呀来呀</span>
+</div>
+</body>
+</html>

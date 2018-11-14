@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        var num=0;
+        function startCount() {
+            document.getElementById('count').value=num;
+            num=num+1;
+            setTimeout("startCount()",1000);
+        }
+
+    </script>
+</head>
+<body>
+<form>
+    <input type="text" id="count" />
+    <input type="button" value="start" onclick="startCount()" />
+</form>
+</body>
+</html>

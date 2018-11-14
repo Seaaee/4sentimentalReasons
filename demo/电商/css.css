@@ -1,0 +1,180 @@
+*{
+    -webkit-transition:background 200ms;
+    -moz-transition: background 200ms;
+    -ms-transition: background 200ms;
+    -o-transition: background 200ms;
+    transition: background 200ms;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+.gotop{margin-top: -6px}
+body {
+    background: #f5f5f5;
+    font-size: 14px;
+    color: #555;
+    line-height: 1.7;
+}
+img{max-width: 100%}
+.container{max-width: 1080px;margin: 0 auto}
+.fl{float: left;}
+.fr{float: right}
+a{text-decoration: none}
+.container:before,
+.container:after{
+    content: "";
+    display: block;
+    clear: both;
+}
+.col-1,
+.col-2,
+.col-3,
+.col-4,
+.col-5,
+.col-6,
+.col-7,
+.col-8,
+.col-9,
+.col-10 {
+    min-height: 1px;
+    float: left;
+}
+
+.col-1 {
+    width: 10%;
+}
+
+.col-2 {
+    width: 20%;
+}
+
+.col-3 {
+    width: 30%;
+}
+
+.col-4 {
+    width: 40%;
+}
+
+.col-5 {
+    width: 50%;
+}
+
+.col-6 {
+    width: 60%;
+}
+
+.col-7 {
+    width: 70%;
+}
+
+.col-8 {
+    width: 80%;
+}
+
+.top-nav{background-color: #eee}
+.top-nav a{color: #666;padding: 6px 6px;display: inline-block}
+.top-nav a:hover{color: #333}
+.header .searchBar {
+    border: 2px solid #dd182b;margin:35px 0 0 60px;
+}
+.header input,
+.header .searchBar button {
+    display: inline-block;
+    padding: 0 10px;
+    height: 35px;
+    border: 0;
+    outline: 0;font-size: 17px
+}
+.header .searchBar button{background:#dd182b;color: #fff; cursor: pointer;position: relative;left:2px}
+.header .cart{margin: 37px 0 0 50px;font-size: 17px;background: #ff8800 url(img/gowuche.png)65px 3px no-repeat;color: white;cursor: pointer;padding: 5px 0 4px 14px}
+
+.main-promote .cat {
+    background: #6e6568;
+    color: #fff;
+}
+
+.main-promote .cat .row {
+    padding: 12px 20px;
+}
+
+.main-promote .cat .row:hover {
+    background: #5d5558;
+}
+
+.main-promote .sub-promote {
+    background: #fff;
+    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+    -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+    padding: 10px;
+}
+
+.main-promote .sub-promote > * {
+    padding-bottom: 10px;
+}
+
+.main-promote .sub-promote .avatar {
+    display: block;
+    width: 50px;
+    height: 50px;
+    float: left;
+    background: #ccc;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.main-promote .auth {
+    margin-top: 10px;
+}
+
+.main-promote .auth button {
+    border: 2px solid #dd182b;
+    background: transparent;
+    color: #dd182b;
+    width: 40%;
+}
+
+.promote-title {
+    font-size: 22px;
+}
+
+.promote-title:before {
+    content: "";
+    display: inline-block;
+    width: 10px;
+    height: 22px;
+    margin-right: 10px;
+    vertical-align: middle;
+    background: #dd182b;
+}
+
+.card {
+    height: 300px;
+    margin: 5px;
+    background: #e5e7dd;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    /*border: 1px solid #ccc;*/
+    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+    -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+}
+
+.footer {
+    text-align: center;
+    margin-top: 30px;
+    background: #eee;
+    padding: 50px 0;
+    color: #999;
+}
+
+.footer a {
+    color: #999;
+    margin-left: 10px;
+}

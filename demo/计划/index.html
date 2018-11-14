@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>UrTaskList</title>
+    <link href="https://cdn.bootcss.com/normalize/7.0.0/normalize.css" rel="stylesheet">
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+
+<div id="main" @click="false_detail">
+
+    <div class="navbar">
+        <h1>计划清单</h1>
+    </div>
+    <div class="header">
+        找见女朋友了么？
+    </div>
+    <form @submit.prevent="add" class="task-form">
+        <div class="wrap" @click.stop="current.detail=true">
+            <input v-model="current.title" type="text" id="task-input" autocomplete="off" placeholder="听说你有想法" >
+            <div v-if="current.detail" class="detail">
+                <textarea v-model="current.desc"></textarea>
+                <input type="datetime-local" v-model="current.alert_at">
+                <button type="submit">提交</button>
+            </div>
+        </div>
+    </form>
+    <div class="task-list">
+        <div class="wrap">
+            未完成
+            <task  v-for="goingToDo in list"
+                   :goingtodo="goingToDo"
+                   v-if="!goingToDo.completed"></task>
+        </div>
+    </div>
+    <div class="task-list">
+        <div class="wrap">
+            已完成
+            <div v-for="todo in list" v-if="todo.completed" class="item completed">
+                <button @click.stop="toggle_completed(todo.id)">未完成</button>
+                {{todo.title}}
+                <button @click.stop="remove(todo.id)">删除</button>
+                <button @click.stop="gengxin(todo)">更新</button>
+                <button @click.stop="toggle_detail(todo.id)">详情</button>
+                <div class="detail" v-if="todo.show_detail">
+                    {{todo.desc||'nothing here'}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<template id="task-tpl">
+    <div class="item">
+        <button @click.stop="action('toggle_completed' , goingtodo.id)">完成</button>
+        {{goingtodo.title}}
+        <button @click.stop="action('remove' , goingtodo.id)">删除</button>
+        <button @click.stop="action('gengxin' , goingtodo)">更新</button>
+        <button @click.stop="action('toggle_detail' , goingtodo.id)">详情</button>
+        <div class="detail" v-if="goingtodo.show_detail">
+            {{goingtodo.desc||'nothing here'}}
+        </div>
+    </div>
+</template>
+<script src="https://cdn.bootcss.com/vue/2.4.4/vue.js"></script>
+<script src="storage.js"></script>
+<script src="jss.js"></script>
+</body>
+</html>

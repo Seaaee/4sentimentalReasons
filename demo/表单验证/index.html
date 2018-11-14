@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+    <div class="wrap wrap-sm">
+        <div class="header">
+            <h1>啦啦啦啦~~~!</h1>
+        </div>
+        <div class="form">
+            <form id="signup" action="www.baidu.com">
+                <div class="input-wrap">
+                    <label>姓名
+                        <input type="text" name="name" class="input-control" data-rule='minlength:2|maxlength:3'
+                            maxlength='6' placeholder="输入你的名字" autofocus required></label>
+                    <div id="name-input-error" class="input-error">你就叫这？？</div>
+                </div>
+                <div class="input-wrap">
+                    <label>用户名
+                        <input type="text" name="username" class="input-control" data-rule='minlength:6|maxlength:12'></label>
+                    <div id="username-input-error" class="input-error">用户名格式有误</div>
+                </div>
+                <div class="input-wrap">
+                    <label>密码
+                        <input type="password" name="password" class="input-control" data-rule='pattern:"^[a-zA-Z0-9]+$"|minlength:6|maxlength:12'></label>
+                    <div id="password-input-error" class="input-error">密码格式有误</div>
+                </div>
+                <div class="input-wrap">
+                    <label>年龄
+                        <input type="text" name="age" class="input-control" data-rule='max:100|min:10'></label>
+                    <div id="age-input-error" class="input-error">？？？</div>
+                </div>
+                <div class="input-wrap">
+                    <label>自我介绍
+                        <input type="text" name="intro" class="input-control" data-rule='required:false|maxlength:100'></label>
+                    <div id="intro-input-error" class="input-error">哪那么多废话？</div>
+                </div>
+                <div class="input-wrap">
+                    <div>
+                        <label for='dropdown'>干啥的dededededede</label>
+                    </div>
+                    <select id="dropdown" name="dropdown" class="input-control">
+                        <option disabled value>Select an option</option>
+                        <option value="student">Student</option>
+                        <option value="job">Full Time Job</option>
+                    </select>
+                </div>
+                <button type="submit">提交</button>
+            </form>
+        </div>
+    </div>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+    <script src="jss/validator.js"></script>
+    <script src="jss/input.js"></script>
+    <script src="jss/main.js"></script>
+</body>
+
+</html>

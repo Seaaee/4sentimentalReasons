@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h4>操作成功！</h4>
+<span id="sec">5</span>
+<span>秒后去主页&nbsp;&nbsp;</span>
+<a href="" onclick="ttt()">返回</a>
+
+
+<script type="text/javascript">
+    var se=5;
+    function count()
+    {
+        se--;
+        document.getElementById("sec").innerHTML=se;
+        if(se==0)
+            window.open("http://cn.bing.com/?wlexpsignin=1&mkt=zh-CN&mkt=zh-CN","_self");
+    }
+
+    setInterval("count()",1000);
+    //通过window的location和history对象来控制网页的跳转。
+
+    function ttt()
+    {
+        history.go(-1);
+    }
+</script>
+</body>
+</html>

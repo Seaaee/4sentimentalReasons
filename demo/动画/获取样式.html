@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>qnmlgb</title>
+    <style>
+        *{margin:0;padding: 0px}
+        div{
+            width:1000px;height:1000px;
+            background: #99FFCC;
+            font-weight: bold;font-size:1px;color:#ffffff;
+        }
+    </style>
+    <script>
+        window.onload=function(){
+            var oDiv=document.getElementsByTagName('div')[0];
+            oDiv.onmouseover=function(){
+                var timer=null;
+                clearInterval(timer);
+                timer=setInterval(function(){
+                    var oDiv=document.getElementsByTagName('div')[0];
+                    var fontS=parseInt(getStyle(oDiv,'fontSize'));
+                    oDiv.style.fontSize=fontS+(365-fontS)/57+'px';
+                },10)
+            }
+        };
+
+
+        //封装一个解决兼容能从css里拿属性的函数
+        //拿出来的也是string
+        function getStyle(obj,sty){
+            if(obj.currentStyle){
+                return obj.currentStyle[sty];//IE里面是属性
+            }
+            else{
+                return getComputedStyle(obj,false)[sty];//火狐里面这是方法
+            }
+        }
+    </script>
+</head>
+<body>
+<div>what？？</div>
+</body>
+</html>

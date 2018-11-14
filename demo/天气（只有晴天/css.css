@@ -1,0 +1,58 @@
+
+
+html,body{  
+    height: 100%;  
+}  
+body{
+    color: #fff;
+    background-color: #161616;
+}
+header{
+    padding-top: 30px
+}
+header h1{
+    display: flex;
+    justify-content: space-around;
+    font-size: 5em;
+    margin-bottom: 10px;
+}
+.cont{
+    padding-top: 30px;
+}
+.status p {
+    font-size: 1.8em;
+    text-transform: capitalize;
+}
+.icons{
+    padding-top: 20px
+}
+#tempUnit{
+    cursor:pointer;
+    color:#006dcc;
+  }
+#tempUnit:hover{
+    color:#005096;
+ }
+#tempUnit,a{
+    position: relative;
+    z-index: 1;
+    transition: 300ms cubic-bezier(0.22, 0.81, 0.32, 1.28)
+}
+.sunn{
+    font-size: 5em;
+    animation: spin 12s linear infinite
+}
+.wi-day-sunny{
+    
+}
+
+.foot{
+    margin-top: 40px
+}
+
+
+@keyframes spin {
+    100%{
+        transform: rotate(360deg);
+    }
+}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #ll{
+            border : 1px solid black;
+            width: 348px;
+            height:348px;
+            opacity: 0.3;
+        }
+    </style>
+</head>
+<body>
+<div id="ll"><h1>php</h1><h1>javascript</h1><h1>jquery</h1><h1>java</h1></div>
+<br><br>
+<button onclick="clearText()">清除节点内容</button>
+
+<script type="text/javascript">
+    /*var aaa=document.getElementById('ll')
+     var aqq=aaa.offsetWidth
+     alert(aqq)*/
+    function clearText() {
+        var content = document.getElementById("content");
+        var con=content.childNodes;
+        // 在此完成该函数
+        while (con.length) {
+            content.removeChild(content.childNodes[0])
+        }
+    }
+    document.write("<br>"+"<br>"+"innerHeight: "+window.innerHeight+
+            "<br>"+"clientHeight: "+document.documentElement.clientHeight+
+            "<br>"+"scrollHeight: "+document.documentElement.scrollHeight+
+            "<br>"+"offsetHeight: "+document.documentElement.offsetHeight+" "+document.body.offsetHeight);
+
+    document.write("<br><br><br>"+"documentElement.clientHeight=window.innerHeight"+"<br>"+".body.clientHeight和这俩又不一样"+"<br><br>"+".documentElement.scrollHeight=.documentElement.offsetHeight 而且可以比上两个小"+"<br>"+".body.offsetHeight比↑小")
+</script>
+</body>
+</html>

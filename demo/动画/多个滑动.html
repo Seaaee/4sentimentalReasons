@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>4个大黄块</title>
+    <style>
+        *{margin:0;padding: 0;}
+        div{
+            width:250px;height:100px;
+            background: #ffff00;
+            margin-top:20px;
+            opacity: 0.3;
+        }
+    </style>
+    <script>
+        window.onload=function(){
+            var oDiv=document.getElementsByTagName('div');
+            for(var i=0;i<oDiv.length;i++){
+                oDiv[i].timer=null;
+                oDiv[i].opacit=0.3;
+                oDiv[i].onmouseover=function(){mOve(this,400,1,0.1);}
+                oDiv[i].onmouseout=function(){mOve(this,250,0.3,-0.1);}
+            }
+
+            function mOve(obj,maxW,target,sped){
+                clearInterval(obj.timer);
+                obj.timer=setInterval(function(){
+                    //滑动
+                    var speed=(maxW-obj.offsetWidth)/4;
+                    speed=speed>0?Math.ceil(speed):Math.floor(speed);
+                    if(obj.width==maxW){clearInterval(obj.timer);}
+                    else{obj.style.width=speed+obj.offsetWidth+'px';}
+                    //透明
+                    obj.opacit+=sped;
+                    if(obj.opacit>1||obj.opacit<0.3){obj.opacit=target;}
+                    obj.style.opacity=obj.opacit;
+                },40)
+            }
+
+
+
+        }
+    </script>
+</head>
+<body>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+</body>
+</html>

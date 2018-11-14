@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="ZN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        #float1 {
+            width: 100px;
+            height: 100px;
+            background: yellowgreen;
+            float: left;
+        }
+
+        #float2 {
+            width: 100px;
+            height: 100px;
+            background: rgb(207, 177, 177);
+            float: left;
+        }
+
+        /* clearFix给container加*/
+
+        .clearFix::after {
+            content: '.';
+            height: 0;
+            display: block;
+            visibility: hidden;
+            clear: both;
+        }
+
+        .war {
+            border: 2px solid black;
+
+        }
+
+
+
+
+
+        .flex-wrapper {
+            display: flex;
+            justify-content: center
+        }
+
+        .liner {
+            border-radius: 20px;
+            width: 15%;
+            height: 400px;
+            margin: 50px;
+        }
+
+        #linear-gradient {
+            background: linear-gradient(30deg, #cff, #fcc);
+        }
+
+        #linear-gradient-r {
+            background: repeating-linear-gradient(30deg,
+                #cff 0px,
+                #fcc 90px,
+                #ffc 90px,
+                #ccf 165px);
+        }
+
+        #linear-gradient-r-tiaoZhuang {
+            background: repeating-linear-gradient(30deg,
+                yellow 0px,
+                yellow 40px,
+                black 40px,
+                black 80px);
+            transition: all 0.4s ease-in-out
+        }
+
+        #linear-gradient-r-tiaoZhuang:hover {
+            transform: rotate(-10deg);
+        }
+
+
+
+
+
+        .simpleDraw {
+            width: 0;
+            border-width: 20px;
+            border-style: solid;
+            border-color: transparent;
+            border-left-color: red;
+            border-radius: 50%;
+        }
+
+        /* .simpleDraw::after {} */
+
+        .pencil {
+            width: 40px;
+            height: 40px;
+            background-color: red;
+        }
+
+        .pencil::before {
+            content: '';
+            display: block;
+            width: 0;
+            height: 0;
+            border-width: 20px;
+            border-style: solid;
+            border-color: transparent;
+            border-left-color: blue;
+            position: absolute;
+            left: 40px;
+        }
+
+        .crescent {
+            position: relative;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 100px;
+            background-color: transparent;
+            border-radius: 50%;
+            box-shadow: 25px 10px 5px 0px rgb(152, 165, 172);
+        }
+
+        .heart {
+            position: absolute;
+            background-color: pink;
+            top: 50%;
+            left: 50%;
+            transform: rotate(-45deg);
+            height: 100px;
+            width: 100px;
+            margin-top: -50px;
+            transition: all 0.5s;
+            animation: heartbeat 0.75s ease-in-out infinite;
+        }
+
+        .heart:hover {
+            background: rgb(230, 151, 164)
+        }
+
+        .heart::after {
+            content: '';
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            position: absolute;
+            left: 50px;
+            background-color: inherit
+        }
+
+        .heart::before {
+            content: '';
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            position: absolute;
+            top: -50px;
+            background-color: inherit
+        }
+
+        .heartWrap {
+            height: 100%;
+            width: 100%;
+            animation: heartback 0.75s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0% {
+                transform: scale(1) rotate(-45deg)
+            }
+
+            50% {
+                transform: scale(1.6) rotate(-45deg)
+            }
+        }
+
+        @keyframes heartback {
+            50% {
+                background-color: #ffe6f2;
+            }
+        }
+
+        .moveAni1 {
+            height: 40px;
+            width: 70%;
+            background: black;
+            margin: 50px auto;
+            border-radius: 5px;
+            position: relative;
+            animation-name: rainbow;
+            animation-duration: 1.5s;
+            animation-iteration-count: infinite;
+            animation-timing-function: ease;
+            animation-direction: alternate
+        }
+
+        @keyframes rainbow {
+            0% {
+                background-color: #fcc;
+                top: 0px;
+                left: 25px;
+            }
+
+            50% {
+                background-color: green;
+                top: 50px;
+                left: 0px;
+            }
+
+            100% {
+                background-color: yellow;
+                top: 100px;
+                left: -25px;
+                opacity: 0.1
+            }
+        }
+
+
+
+
+
+        /* #box-container {
+    height: auto;
+  }
+  #box-1 {
+    background-color: dodgerblue;
+    width: 50%;
+    height: 500px;
+  }
+
+  #box-2 {
+    background-color: orangered;
+    width: 50%;
+    height: 500px;
+  } 
+  div{
+    height: 200px;
+    background: #2cd
+}
+p{
+    width: 40%;
+    height: 40%;
+    background: #cff
+}
+  */
+
+
+
+
+
+        #box-container {
+            display: flex;
+            height: 500px;
+
+            border: 1px solid black;
+        }
+
+        #box-1 {
+            background-color: dodgerblue;
+            /* width: 500px; */
+            /* flex-shrink:0 */
+            width: 500px;
+            flex: 0 1 auto
+        }
+
+        #box-2 {
+            background-color: orangered;
+            /* width: 500px; */
+            /* flex-shrink:0 */
+            flex: auto
+        }
+
+
+
+
+        .HolyGrail {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+            background: #ccf
+        }
+
+        header,
+        footer {
+            flex: auto;
+        }
+
+        footer {
+            background: #fcc
+        }
+
+        header {
+            background: #dcc
+        }
+
+        .HolyGrail-body {
+            display: flex;
+            flex: auto;
+            background: #ffe6f2
+        }
+
+        .HolyGrail-content {
+            flex: auto;
+            background: #2cd
+        }
+
+        .HolyGrail-nav,
+        .HolyGrail-ads {
+            /* 两个边栏的宽度设为12em */
+            flex: 0 0 12em;
+            background: #cff
+        }
+
+        .HolyGrail-nav {
+            /* 导航放到最左边 */
+            order: -1;
+        }
+
+        @media (max-width: 768px) {
+            .HolyGrail-body {
+                flex-direction: column;
+            }
+
+            .HolyGrail-nav,
+            .HolyGrail-ads,
+            .HolyGrail-content {
+                flex: auto;
+            }
+        }
+
+
+
+
+
+
+
+
+        /*
+border-box content会减边框和padding的值  下面这个width是178
+**/
+        /* div{
+    box-sizing: border-box;
+    width: 200px;
+    height:200px;
+    padding:10px;
+    border: 1px solid black;
+    background: #ccf
+} */
+
+
+
+        /* survey 页面*/
+        /* html,
+body {
+  background-color: #a9d7d1;
+  text-align: center;
+  font-family: 'Raleway', Helvetica, sans-serif;
+  min-width: 520px;
+}
+
+header {
+  font-size: 2em;
+  font-weight: bold;
+  margin: 20px;
+}
+
+#form-outer {
+  background-color: rgb(250, 250, 250);
+  margin: 0 auto;
+  border-radius: 4px;
+  width: 65%;
+  max-width: 900px;
+  padding: 10px;
+  padding-top: 20px;
+}
+
+.labels {
+  display: inline-block;
+  text-align: right;
+  width: 40%;
+  padding: 5px;
+  vertical-align: top;
+  margin-top: 10px;
+}
+
+.rightTab {
+  display: inline-block;
+  text-align: left;
+  width: 48%;
+}
+
+.input-field {
+  height: 20px;
+  width: 280px;
+  padding: 5px;
+  margin: 10px;
+  border: 1px solid #c0c0c0;
+  border-radius: 2px;
+}
+
+#userAge {
+  width: 40px;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+#submit {
+  background-color: #59ace0;
+  border-radius: 4px;
+  color: white;
+  font-size: 1em;
+  height: 40px;
+  width: 96px;
+  margin: 10px;
+  border: 0px solid;
+}
+
+.dropdown {
+  height: 35px;
+  width: 200px;
+  padding: 5px;
+  margin: 10px;  
+  margin-top: 15px;
+  border: 1px solid #c0c0c0;
+  border-radius: 2px;
+}
+
+.radio, .checkbox {
+  position: relative;
+  left: -33px;
+  display: block;
+  padding-bottom: 10px;
+}
+
+@media screen and (max-width: 953px) {
+  .input-field {
+    width: 80%;
+  }
+  .dropdown {
+    width: 65%;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .labels {
+    width: 100%;
+    text-align: left;
+  }
+  .rightTab {
+    width: 80%;
+    float: left;
+  }
+  .input-field {
+    width: 100%;
+  }
+  select {
+    width: 100%;
+  }
+} */
+    </style>
+</head>
+
+<body>
+
+
+    <!-- 清除浮动 -->
+    <!-- <div class='clearFix war'>        
+    <div id='float1'>
+        1
+    </div>
+    <div id="float2">
+        2
+    </div>
+    </div> -->
+
+
+    <!-- 三个竖条 -->
+    <!-- <div class='flex-wrapper'>
+        <div id="linear-gradient" class='liner'></div>
+        <div id='linear-gradient-r' class='liner'></div>
+        <div id='linear-gradient-r-tiaoZhuang' class='liner'></div>
+    </div> -->
+
+    <!-- 简单画 -->
+    <!-- <div class='simpleDraw'></div> -->
+    <!-- <div class="pencil"></div> -->
+    <!-- <div class="crescent"></div> -->
+    <!-- <div class="heartWrap">
+        <div class="heart"></div>
+    </div> -->
+    <!-- <div class="moveAni1"></div> -->
+
+
+    <!-- 浮动 BFC相关 -->
+    <!-- <div style="width: 30px;height:30px;float:left;background: black"></div>
+    <div style="overflow: hidden;;margin-top: 10px;border:1px solid black;">        
+        <div style="margin: 20px;width: 20px;height: 20px;border: 1px solid black"></div>
+        <div style="float: left;;margin: 20px;width:20px;height: 20px;border: 1px solid black"></div>
+    </div>
+    margin 自带垂直重叠 -->
+
+
+
+    <!-- 百分比单位响应 -->
+    <!-- <div style="height: 50%;width:50%;border:1px solid black">
+        <div style="height:50%;width:50%;border:1px solid black"></div>
+    </div> -->
+
+
+
+    <!-- 宽高注意  
+    <div id="box-container">
+        <div id="box-1"></div>
+        <div id="box-2"></div>
+    </div>
+    <div>
+        <p></p> 
+    </div>
+        一个块级元素只设置width没用   设置高的话宽为100%
+
+        height如果为auto子元素高为百分比则无法计算
+        width为auto子元素宽为百分比则可以计算
+        也就是说子元素的宽高为百分比的话  父元素光设置宽撑不起来    如果只设置高则可以 宽为子元素的设置 -->
+
+
+
+
+
+    <!-- flex -->
+    <!-- <div id="box-container">
+            <div id="box-1"></div>
+            <div id="box-2"></div>
+          </div> -->
+
+    <!-- <div class="HolyGrail">
+            <header>...</header>
+            <div class="HolyGrail-body">
+              <main class="HolyGrail-content">...</main>
+              <nav class="HolyGrail-nav">...</nav>
+              <aside class="HolyGrail-ads">...</aside>
+            </div>
+            <footer>...</footer>
+         </div> -->
+
+    <!-- flex 1和auto区别    几把东西  如果用了flex 就别再用flex-basis和grow shrink
+         1的时候 flex-basis为0  不会给剩余空间
+         auto的时候 flex-basis为auto  根据内容预留空间 -->
+    <!-- <div class="parent">
+        <div class="item-1"></div>
+        <div class="item-2"></div>
+        <div class="item-3"></div>
+    </div>
+
+    <style type="text/css">
+        .parent {
+            display: flex;
+            width: 1600px;
+            background: #ccf
+        }
+
+        .parent div {
+            height: 100px;
+        }
+
+        .item-3 {
+            width: 140px;
+            flex: 1 1 0;
+            background: blue;
+        }
+
+        .item-2 {
+            width: 100px;
+            flex: 2 1 auto;
+            background: darkblue;
+        }
+
+        .item-1 {
+            flex: 2 1 200px;
+            background: lightblue;
+        }
+    </style> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- <style type="text/css">
+.aa{
+    background: #cff;
+    display: grid;
+    min-height: 100%;
+    grid-template-columns: 300px 300px;
+    grid-template-rows: 300px 300px;
+    grid-column-gap: 20px;
+    justify-items:center;
+    align-items: center;
+    justify-content: center;
+    align-content: space-evenly;
+    grid-auto-columns: 300px;
+    grid-auto-rows: 300px;
+    /* grid-auto-flow: column; */
+}
+.bb{
+    background: #fcc;
+    width: 10rem;
+    height: 10rem;
+}
+#cc{ 
+    width:80%;
+    height: 60%;
+    grid-column: 3/5;
+    grid-row: 1/2;
+    /* 如果行列只定位了一个 原位置保留别的不占 */
+}
+#dd{
+    justify-self: end;
+    align-self: start;
+}
+</style>
+
+<div class="aa">
+<div class="bb">1</div>
+<div class="bb" id="cc">2</div>
+<div class="bb" id='dd'>3</div>
+<div class="bb">4</div> -->
+
+
+
+
+
+    <!-- grid-area -->
+    <!-- <style type="text/css">
+ .contain{
+    display: grid;
+    background: black;
+    min-height: 100%;
+    min-width: 100%;
+    grid-gap: 10px;
+    grid-auto-rows: 300px;
+    grid-auto-columns: 300px; 
+                                /* built-in function   auto-fill 是repeat*/
+                                /* repeat(auto-fill, minmax(100px,140px)) */
+  /* grid-template-columns: repeat(3, minmax(90px,1fr)) ;  */
+  /* grid-template-rows:[row1-top] 20% [row1-end row2-top] 60% [row2-end row3-top] auto [row3-end]; */
+  /* grid-template-columns: 1fr 70%; */
+    grid-template: [row1-top] "head main" 20% [row1-end]
+                   [row2-top] "nav main" 60%  [row2-end]
+                   [row3-top] ". foot" auto [row3-end]
+                    / [col1] 1fr [col1-end col2] 70% [col3]; 
+                    /* gird-template这个简写没有auto-columns这些
+                    用 grid 简写  */
+}
+
+.head{
+    grid-area: head;
+     background: #ccf
+}
+.nav{
+    grid-area:nav;
+    background: #fcc
+}
+.main{
+    grid-area: main;
+    background: #ffc
+}
+.foot{
+    background: #ccf;
+    grid-area: foot
+}
+#qq{
+    background: white;
+    grid-row: 3/5;
+    grid-column: 3/4;
+}
+</style>
+<div class="contain">
+    <div class="aa head">head</div>
+    <div class="aa nav">nav</div>
+    <div class="bb main">main</div>
+    <div class="bb foot">foot</div>
+    <div id="qq"></div>
+</div>   -->
+
+    <!-- auto-fill auto-fit 还有一些问题 -->
+    <!-- <style>
+    .item1{background:LightSkyBlue;}
+    .item2{background:LightSalmon;}
+    .item3{background:PaleTurquoise;}
+    .item4{background:LightPink;}
+    .item5{background:PaleGreen;}
+    .container {
+      font-size: 40px;
+      min-height: 100px;
+      width: 100%;
+      background: LightGray;
+      display: grid;
+
+                            /* built-in function   auto-fill 是repeat内的选项*/
+                            /* repeat(auto-fill, minmax(100px,140px)) */
+                                            /* 这个 fr 还只能是后一位 */
+      grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
+      
+      /* change the code above this line */
+      grid-template-rows: 1fr 1fr;
+      grid-gap: 10px;
+    }
+  </style>
+  <div class="container">
+    <div class="item1">1</div>
+    <div class="item2">2</div>
+    <div class="item3">3</div>
+    <div class="item4">4</div>
+    <div class="item5">5</div>
+  </div> -->
+
+
+
+
+    <!-- survey页面 -->
+    <!-- <h1 id="title">Survey Form</h1>
+  <div id="form-outer">
+    <p id="description">
+      Let us know how we can improve freeCodeCamp
+    </p>
+    <form id="survey-form" method="GET" action="https://crossorigin.me/https://freecodecamp.com">
+      <div class="rowTab">
+        <div class="labels">
+          <label id="name-label" for="name">* Name: </label>
+        </div>
+        <div class="rightTab">
+          <input autofocus type="text" name="name" id="name" class="input-field" placeholder="Enter your name" required>
+        </div>
+      </div>
+      <div class="rowTab">
+        <div class="labels">
+          <label id="email-label" for="email">* Email: </label>
+        </div>
+        <div class="rightTab">
+          <input type="email" name="email" id="email" class="input-field" required placeholder="Enter your Email">
+        </div>
+      </div>
+      <div class="rowTab">
+        <div class="labels">
+          <label id="number-label" for="age">* Age: </label>
+        </div>
+        <div class="rightTab">
+          <input type="number" name="age" id="number" min="1" max="125" class="input-field" placeholder="Age">
+        </div>
+      </div>
+      <div class="rowTab">
+        <div class="labels">
+          <label for="currentPos">Which option best describes your current role?</label>
+        </div>
+        <div class="rightTab">
+          <select id="dropdown" name="currentPos" class="dropdown">
+        <option disabled value>Select an option</option>
+        <option  value="student">Student</option>
+        <option value="job">Full Time Job</option>
+        <option value="learner">Full Time Learner</option>
+        <option value="preferNo">Prefer not to say</option>
+        <option value="other">Other</option>
+      </select>
+        </div>
+      </div>
+      <div class="rowTab">
+        <div class="labels">
+          <label for="userRating">* How likely is that you would recommend freeCodeCamp to a friend?</label>
+        </div>
+        <div class="rightTab">
+          <ul style="list-style: none;">
+            <li class="radio"><label><input name="radio-buttons" value="1"  type="radio">Definitely</label></li>
+            <li class="radio"><label><input name="radio-buttons" value="2"  type="radio">Maybe</label></li>
+            <li class="radio"><label><input name="radio-buttons" value="3"  type="radio">Not sure</label></li>
+          </ul>
+        </div>
+      </div>
+      <div class="rowTab">
+        <div class="labels">
+          <label for="most-like">What do you like most in FCC: </label>
+        </div>
+        <div class="rightTab">
+          <select id="most-like" name="mostLike" class="dropdown">
+        <option disabled selected value>Select an option</option>
+        <option value="challenges">Challenges</option>
+        <option value="projects">Projects</option>
+        <option value="community">Community</option>
+        <option value="openSource">Open Source</option>
+      </select>
+        </div>
+      </div>
+      <div class="rowTab">
+        <div class="labels">
+          <label for="preferences">Things that should be improved in the future<br>(Check all that apply): </label>
+        </div>
+        <div class="rightTab">
+          <ul id="preferences" style="list-style: none;">
+            <li class="checkbox"><label><input name="prefer" value="1" type="checkbox" >Front-end Projects</label></li>
+            <li class="checkbox"><input name="prefer" value="2" type="checkbox" >Back-end Projects</li>
+            <li class="checkbox"><label><input name="prefer" value="3" type="checkbox" >Data Visualization</label></li>
+            <li class="checkbox"><label><input name="prefer" value="4" type="checkbox" >Challenges</label></li>
+            <li class="checkbox"><label><input name="prefer" value="5" type="checkbox" >Open Source Community</label></li>
+            <li class="checkbox"><label><input name="prefer" value="6" type="checkbox" >Gitter help rooms</label></li>
+            <li class="checkbox"><label><input name="prefer" value="7" type="checkbox" >Videos</label></li>
+            <li class="checkbox"><label><input name="prefer" value="8" type="checkbox" >City Meetups</label></li>
+            <li class="checkbox"><label><input name="prefer" value="9" type="checkbox" >Wiki</label></li>
+            <li class="checkbox"><label><input name="prefer" value="10" type="checkbox" >Forum</label></li>
+            <li class="checkbox"><label><input name="prefer" value="10" type="checkbox" >Additional Courses</label></li>
+          </ul>
+        </div>
+      </div>
+      <div class="rowTab">
+        <div class="labels">
+          <label for="comments">Any Comments or Suggestions?</label>
+        </div>
+        <div class="rightTab">
+          <textarea id="comments" class="input-field" style="height:50px;resize:none;" name="comment" placeholder="Enter your comment here..."></textarea>
+        </div>
+      </div>
+      <button id="submit" type="submit">Submit</button>
+    </form>
+  </div> -->
+
+
+
+
+
+    <!-- overflow相关  英文换行 -->
+    <!-- <style type="text/css">
+    div 
+    {
+    background-color:#00FFFF;
+    width:150px;
+    height:150px;
+    overflow-x:hidden;
+    overflow-y: auto;
+    word-wrap:break-word
+    }
+    </style>
+<div>
+    My father was a self-taught mandolin player. He was one of the best string instrument players in our town. He could not read music, but if he heard a tune a few times, he could play it. When he was younger, he was a member of a small country music 
+</div> -->
+
+
+
+    <!-- 行内元素包裹块元素照样换行  行内元素宽高为auto -->
+    <!-- <span>
+    <div>1</div>
+</span>
+<span>
+    <div>2</div>
+</span>
+<span>
+    <div>3</div>
+</span> -->
+
+
+    <!-- text-align还控制inline-block对齐点 
+    如果父元素是 flex text-align也起作用  虽然子元素仍然是block
+-->
+    <!-- <style type="text/css">
+#main{
+    background: rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin:200px auto;
+    height: 700px;
+    width: 1800px 
+}
+.qqq{
+    border: 1px solid black;
+    margin:100px;
+    height: 200px;
+    width: 200px;
+    margin: 0;
+    margin-right: 0;
+    /* display: inline-block; */
+}
+</style>
+<div id='main'>
+    <div class="qqq"></div>
+    <div class="qqq"></div>
+</div> -->
+
+
+</body>
+
+</html>
+
+
+
+
+<!-- 空函数F 继承  
+
+   function extend(Child, Parent) {
+
+　　　　var F = function(){};
+
+　　　　F.prototype = Parent.prototype;
+
+　　　　Child.prototype = new F();
+
+　　　　Child.prototype.constructor = Child;
+
+　　　　Child.uber = Parent.prototype;
+
+　　}
+
+普通对象就是 深/浅拷贝
+
+  -->

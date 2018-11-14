@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="weather-icons-master/css/weather-icons.css">
+    <link rel="stylesheet" href="../animate.css">
+    <title>Document</title>
+</head>
+<style>
+.zz{
+    margin-top: 40px
+}
+.wi{
+    font-size: 5em;
+    animation: spin 10s linear infinite
+}
+
+@keyframes spin {
+    100%{
+        transform: rotate(360deg);
+    }
+}
+#aa{
+    width: 50px;
+    height: 50px;
+    padding: 10px;
+    border: 1px solid black
+}
+</style>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="zz col-xs-8 col-xs-offset-2">
+                <i class="wi wi-day-sunny"></i>
+            </div>
+        </div>
+    </div>
+<script>
+           
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var lat = position.coords.latitude;
+                var lon =  position.coords.longitude;
+                console.log(lat+","+lon)
+            })
+           
+</script>
+</body>
+</html>

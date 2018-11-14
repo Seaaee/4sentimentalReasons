@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>tEst</title>
+    <style>
+        div{
+            width:200px;height:100px;
+            background: #ffff00;
+            border:2px solid black;
+            opacity: 0.3;
+        }
+    </style>
+    <script src="动画框架.js"></script>
+    <script>
+      window.onload=function() {
+          var oDiv = document.getElementsByTagName('div')[0];
+          oDiv.onmouseover = function () {
+              mOve(oDiv, {opacity: 100}, function(){
+                  mOve(oDiv,{height:400
+                  })
+              }
+          );
+        }
+          oDiv.onmouseout=function(){
+              mOve(oDiv,{opacity:30},function(){
+                  mOve(oDiv,{height:100})
+              })
+          }
+      }
+    </script>
+</head>
+<body>
+<div></div>
+</body>
+</html>

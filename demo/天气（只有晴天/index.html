@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Show the Local Weather</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="weather-icons-master/css/weather-icons.css">
+    <link rel="stylesheet" href="../animate.css">
+    <link rel="stylesheet" href="css.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <header class="col-xs-8 col-xs-offset-2">
+                <h1>
+                    <i class="wi wi-day-cloudy-high"></i>
+                    <i class="wi wi-day-sunny"></i>
+                    <i class="wi wi-day-haze"></i>
+                    <i class="wi wi-night-sleet"></i>
+                    <i class="wi wi-moonrise"></i>
+                    <i class="wi wi-night-alt-cloudy"></i>
+                    <i class="wi wi-night-clear"></i>
+                    <i class="wi wi-stars"></i>
+                </h1>
+                <h1>
+                    How's the Weather ?
+                </h1>
+            </header>
+
+
+            <div class="cont col-xs-8 col-xs-offset-2 text-center">
+                <div class="status">
+                    <p><span id="city"></span> <span id="country"></span></p>
+                    <p><span id="temp"></span> <span id="tempUnit"></span></p>
+                    <p id="desc"></p>
+                </div>
+
+                <div class="icons">
+                    <div class="sun">
+                        <i class="sunn wi wi-day-sunny"></i>
+                    </div>
+                </div>
+
+                <p class="foot text-center">
+                By <a href="s.html" target="_blank">Seasee</a>
+                </p>
+            </div>
+
+            
+        </div>
+    </div>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+    <script src="jjs.js"></script>
+</body>
+</html>

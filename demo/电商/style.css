@@ -1,0 +1,75 @@
+
+.comWidth{
+    width: 1000px;margin-left: auto;margin-right: auto;
+
+}
+
+.topBar{
+    height:31px;
+    background-color: #F7F7F7;
+    line-height: 31px;
+}
+
+.collection{
+    background: url("img/wrnm.png") left center no-repeat;
+    padding-left: 19px;
+    font-weight: bold;
+}
+
+.topBar a:hover{color:red}
+
+
+/*logoBar*/
+.logoBar{
+    height:85px;background-color: #1D7AD9;
+}
+
+.logo{padding-left: 12px}
+
+.search_box{width:430px;padding-top: 23px;padding-left: 168px}
+
+.search_text{width: 350px;height: 35px;padding:0 5px }
+
+.search_btn{width:70px;height:35px;font-size: 15px;font-family: 微软雅黑;background-color: #FF8C00;color: #FFF}
+.search_btn,.shopCar{cursor: pointer}
+.shopCar{width:145px;height:35px;background-color: #FF8C00;margin-top: 23px;font: 14px/35px "微软雅黑 Light";color: #FFFFFF;margin-right: 30px}
+
+.shopText{height: 35px;width:87px;border-right: 1px solid #E27A00;  background: url("img/gowuche.png")left center no-repeat;text-indent: 36px}
+
+.shopNum{width: 29px;height: 35px;background: url("img/sanjiao.png")29px 1px no-repeat;text-align: left;padding-left: 16px}
+
+.navBox{
+    height:35px;
+    background-color: #1369C0;
+    color:white;
+}
+.shopClass{margin-top: -1px;margin-left: auto;margin-right: auto}
+.shopClass h3{font-size: 19px;height: 35px;line-height: 35px;width: 80px;float: left;margin-left: -130px;text-align: center}
+.nav{float: left;margin-left: -10px}
+.nav li{float: left;text-align: center;width: 110px;line-height: 35px;font-size: 13px}
+.nav a{color: #FFFFFF}
+.nav li:hover{background-color: #4593FD}
+
+.shopClass_show{background-color: #4593FD}
+.shopClass_item{padding: 14px 10px;background: url("img/youjiantou.png")right top no-repeat;border-bottom: 1px solid #3487F2;border-bottom: 1px solid #5AA1FE}
+.shopClass_item .b{font:14px/1 'Microsoft YaHei','微软雅黑';font-weight: bolder}
+.shopClass_item dt{height: 24px}
+.shopClass_item a{color: #FFFFFF;width: 48px;height: 20px;padding: 2px 4px}
+.shopClass_item a:hover{background-color: #1369C0;  border-radius: 5px;text-decoration: underline}
+.shopClass_list{width: 568px;border: 1px solid #E5E5E5}
+.shopList_item{margin-left: 20px;margin-right: 20px;padding: 15px 0;border-bottom: 1px solid #E5E5E5}
+.shopList_item dt a{color:#4B87D9;font-weight: bold;}
+.shopList_item dd{padding-left:65px;margin-top: -20px;line-height: 24px}
+.shopList_item dd a{margin-right: 14px}
+.shopList_item dd a:hover{color: #FF7300}
+.shopList_item .shopList_btn{display:inline-block;height: 24px;line-height:26px;font-size:12px;
+    color:#FFF;margin-right: 10px;padding-left: 8px;padding-right: 28px;background:#2785E6 url(img/ujiao.png)right center no-repeat}
+.shopTit{height: 44px;line-height: 44px;font-family: 微软雅黑;z-index: 20000; position: absolute;top:530px;  left:460px;}
+.shopTit h3{font-size: 24px;float: left;padding-left: 15px;font-weight: normal}
+.icon{width: 44px;height: 44px;float: left;background: url("img/icon.png")left center no-repeat}
+.shopTit a{float: right;margin-top: 15px}
+.shopTit a:hover{text-decoration: underline}
+
+
+
+

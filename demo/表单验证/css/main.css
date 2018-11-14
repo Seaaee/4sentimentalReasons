@@ -1,0 +1,22 @@
+*{
+    /*background-color: rgba(0,0,0,.1);*/
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+html,body{
+    padding: 0;
+    margin: 0;
+}
+.wrap{
+    margin: 0 auto;
+    font-family: 'Raleway', Helvetica, sans-serif;
+}
+.wrap-sm{
+    max-width: 500px;
+}
+.header h1{margin-top: 0}
+.header {margin-top: 20px}
+.input-wrap{margin-bottom: 10px;}
+.input-control{padding: 5px ;border: 1px solid #000;width: 100%;}
+.input-error{display: none}

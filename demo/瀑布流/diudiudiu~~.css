@@ -1,0 +1,32 @@
+*{
+    margin:0;
+    padding:0;
+
+}
+body{
+    background: linear-gradient(to right,black,grey);
+}
+
+#main{
+    position: relative;
+    margin:0 auto;
+
+}
+
+.box{
+    padding: 15px 10px 0 10px;
+    float:left;
+}
+
+.pic{
+    padding:5px;
+    border:1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 5px 1px black;
+}
+
+.pic img{
+    width: 296px;
+    height: auto;
+    display: block;
+}

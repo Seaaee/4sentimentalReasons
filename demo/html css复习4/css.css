@@ -1,0 +1,289 @@
+html,
+body,
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: 'Lato', sans-serif;
+}
+
+body {
+    background-color: #eee;
+}
+
+ul,
+li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: #000
+}
+
+header,
+ul,
+#hero,
+.flex,
+.icon,
+.desc,
+#how-it-works,
+#pricing,
+#tenor,
+#bass,
+#valve,
+footer {
+    display: flex;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    min-height: 75px;
+    width: 100%;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 30px;
+    background: #eee
+}
+
+/* .logo{
+    width: 60vw;
+} */
+nav {
+    font-weight: 400;
+}
+
+header img {
+    width: 100%;
+    max-width: 300px;
+    display: block;
+}
+
+header ul {
+    width: 35vw;
+    justify-content: space-around;
+}
+header ul li{
+    text-align: center;
+    min-width: 105px;
+}
+
+
+
+#hero {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 200px;
+    margin-top: 75px;
+}
+
+#hero h2 {
+    word-wrap: break-word;
+}
+
+#hero input {
+    width: 100%;
+}
+
+#hero input[type="email"] {
+    max-width: 275px;
+    padding: 5px;
+}
+
+#hero input[type="submit"] {
+    max-width: 150px;
+    height: 30px;
+    margin: 20px 0;
+    padding: 0;
+    border: 0;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-family: 'Lato', sans-serif;
+}
+
+#hero input[type="submit"],
+button {
+    background: #f1c40f;
+}
+
+#hero input[type="submit"]:hover,
+#pricing button:hover {
+    background: orange;
+    transition: 1s
+}
+
+
+
+.container {
+    max-width: 1000px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.container>section {
+    margin-top: 50px
+}
+
+.icon,
+.desc {
+    height: 125px;
+    justify-content: center;
+}
+
+.desc {
+    flex-direction: column;
+    width: 80%
+}
+
+.icon {
+    width: 20%;
+    align-items: center;
+    color: darkorange;
+}
+
+.desc h2,
+.desc p {
+    margin: 0;
+}
+
+
+#how-it-works {
+    justify-content: center;
+    margin-bottom: 50px;
+}
+
+#how-it-works iframe {
+    width: 100%;
+    max-width: 560px;
+}
+
+
+#pricing {
+    justify-content: center;
+}
+
+#tenor,
+#bass,
+#valve {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: calc(100% / 3);
+    padding: 1px;
+    padding-right: 0;
+    margin: 10px;
+    border: 1px solid #000;
+    border-radius: 5px;
+}
+
+#pricing .level {
+    width: 100%;
+    padding: 15px 0px;
+    background: #ddd;
+    text-align: center;
+    line-height: 1em;
+    font-weight: bold;
+    border-radius: 5px
+}
+
+#pricing h3 {
+    margin:0;
+    margin-top: 15px;
+}
+
+#pricing ol {
+    margin: 15px 0;
+}
+
+#pricing li {
+    padding: 5px 0;
+}
+
+#pricing button {
+    height: 40px;
+    border: 0;
+    margin: 15px 0;
+    padding: 0 15px;
+    background-color: #f1c40f;
+    font-weight: 400;
+    font-size: 1rem;
+}
+
+
+footer{
+    background: #ddd;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin-top: 50px;
+    padding: 20px;
+}
+footer ul {
+    display: flex;
+    justify-content: flex-end;
+}
+footer ul li{
+    padding:0 10px
+}
+footer *{
+    text-align: right
+}
+
+@media (max-width:800px){
+    #pricing{
+        flex-direction: column;
+        align-items: center;
+    }
+    #pricing #tenor, #pricing #bass, #pricing #valve {
+        max-width: 300px;
+        width: 100%;
+        
+    }
+}
+
+@media (max-width:650px){
+    header,header nav,nav ul{
+        flex-direction: column
+    }
+    header *{
+        width: 100%;
+    }
+    header img{
+        margin: 15px 0;
+    }
+    header nav,nav ul{
+        display: flex;
+        align-items: center;
+        text-align: center;
+    }
+    header ul li{
+        padding: 5px 0;
+    }
+    #hero{
+        margin-top:150px
+    }
+    #features{
+        margin-top: 0;
+    }
+}
+@media (max-width:550px){
+    #features .icon {
+        display: none;
+      }
+    #features .desc{
+        width: 100%;
+        text-align: center;
+        height: 150px;
+    }
+}

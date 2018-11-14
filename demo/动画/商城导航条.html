@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>地狗-digo！！</title>
+    <style>
+        *{margin: 0;padding:0}
+
+        body{
+            font-size: 12px;
+            line-height: 1.7;
+        }
+        li{
+            list-style: none;
+        }
+
+        #content{
+            width:800px;
+            margin:0 auto;
+            padding: 20px;
+        }
+
+        #content h1{
+            color: #0088bb;
+        }
+
+        #content .item{
+            padding: 20px;
+            margin-bottom: 20px;
+            border:1px dotted #0088bb;
+        }
+
+        #content .item h2{
+            font-size: 16px;
+            font-weight: bold;
+            border-bottom: 2px solid #0088bb;
+            margin-bottom: 10px;
+        }
+
+        #content .item li{
+            display: inline;
+            margin-right: 10px;
+        }
+
+        #content .item li a{
+            width: 230px;
+            height: 230px;
+            overflow: hidden;
+        }
+        #content .item li a img{
+            width:230px
+        }
+        #menu{
+            position: fixed;
+            top:100px;
+            left:50%;
+            margin-left:400px;
+            width: 80px;
+        }
+
+        #menu ul li a{
+            display: block;
+            margin: 5px 0;
+            font-size: 14px;
+            font-weight: bold;
+            color:#333333;
+            width: 80px;
+            height: 40px;
+            line-height: 40px;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        #menu ul li a:hover,
+        #menu ul li a.current{
+            color: #ffffff;
+            background: #0088bb;
+        }
+    </style>
+
+    <script src="http://libs.baidu.com/jquery/1.10.2/jquery.min.js"></script>
+<!--
+    <script>
+        $(document).ready(function(){
+            $(window).scroll(function(){
+                var top=$(document).scrollTop()
+                /*console.log(top)*/
+                var menu=$('#menu')
+                var items=$('#content').find('.item')
+                var currentId=''
+                items.each(function(){
+                    var m=$(this)
+                    var itemTop= m.offset().top
+                    if(top>itemTop-150){
+                        currentId='#'+ m.attr('id')
+                    }else{
+                        return false;
+                    }
+                })
+                var currentLink=menu.find('.current')
+                if(currentId&&currentLink.attr('herf')!=currentId){
+                    currentLink.removeClass('current')
+                    menu.find("[href="+currentId+"]").addClass('current')
+                }
+
+            })
+
+
+        })
+    </script> jquery
+-->
+
+
+    <script>
+        window.onload=function(){
+            window.onscroll=function(){
+                var top = document .documentElement.scrollTop || document .body.scrollTop
+                var menus=document.getElementById('menu').getElementsByTagName('a');
+                var items=document.getElementById('content').getElementsByClassName('item')
+                var currentId=''
+                for(var i= 0;i<items.length;i++){
+                    var _item=items[i]
+                    var _itemTop=_item.offsetTop
+                    if(top>_itemTop-200){
+                        currentId=_item.id
+                    }else{
+                        break
+                    }
+                }
+
+                var currentLink=document.getElementsByClassName('current')[0]
+                var href=currentLink.href.split('#')
+
+                if(currentId&&href[href.length-1]!=currentId){
+                    for(var j=0;j<menus.length;j++){
+                        var _menu=menus[j]
+                        var _href=_menu.href.split('#')
+                        if(_href[_href.length-1]==currentId){
+                            _menu.setAttribute("class", 'current')
+                            currentLink.setAttribute("class", '')
+                        }
+
+
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+<div id="menu">
+    <ul>
+        <li><a href="#item1" class="current">1F 男装</a></li>
+        <li><a href="#item2">2F 女装</a></li>
+        <li><a href="#item3">3F 童装</a></li>
+        <li><a href="#item4">4F 数码</a></li>
+        <li><a href="#item5">5F 书籍</a></li>
+    </ul>
+</div>
+<div id="content">
+    <h1>digo!!</h1>
+    <div id="item1" class="item">
+        <h2>1F 男装</h2>
+        <ul>
+            <li><a href="#"><img src="../img/875f2fe04a62eb09566a5cca2e177253.jpg" alt=""></a></li>
+            <li><a href="#"><img src="../img/551893180dcc66fb79fe1320af2f061f.jpg" alt=""></a></li>
+            <li><a href="#"><img src="../img/bdac03559917144f2105ce80f3d2e4ee.jpg" alt=""></a></li>
+            <li><a href="#"><img src="../img/f4a78e72ead78b21c67d24a623deaa94.jpg" alt=""></a></li>
+            <li><a href="#"><img src="../img/timg-1.jpg" alt=""></a></li>
+            <li><a href="#"><img src="../img/d3ca6433c86ec547161f18de30dd769c.jpg" alt=""></a></li>
+            <li><a href="#"><img src="../img/e22cc38fc9ca5cc4339cc0d888d5e40e.jpg" alt=""></a></li>
+            <li><a href="#"><img src="../img/e22cc38fc9ca5cc4339cc0d888d5e40e.jpg" alt=""></a></li>
+            <li><a href="#"><img src="../img/4df6f1b0f9ce9f228e46b16fa2241b85.jpg" alt=""></a></li>
+        </ul>
+    </div>
+    <div id="item2" class="item">
+        <h2>2F 女装</h2>
+        <ul>
+            <li><a href="#"><img src="../img/wii.png" alt=""></a></li>
+            <li><a href="#"><img src="../img/wii.png" alt=""></a></li>
+            <li><a href="#"><img src="../img/wii.png" alt=""></a></li>
+            <li><a href="#"><img src="../img/wii.png" alt=""></a></li>
+            <li><a href="#"><img src="../img/wii.png" alt=""></a></li>
+            <li><a href="#"><img src="../img/wii.png" alt=""></a></li>
+            <li><a href="#"><img src="../img/wii.png" alt=""></a></li>
+            <li><a href="#"><img src="../img/wii.png" alt=""></a></li>
+            <li><a href="#"><img src="../img/wii.png" alt=""></a></li>
+        </ul>
+    </div>
+    <div id="item3" class="item">
+        <h2>3F 童装</h2>
+        <ul>
+            <li><a href="#"><img src="../img/wii.png" alt=""></a></li>
+            <li><a href="#"><img src="../img/wii.png" alt=""></a></li>
+            <li><a href="#"><img src="../img/wii.png" alt=""></a></li>
+            <li><a href="#"><img src="../img/wii.png" alt=""></a></li>
+            <li><a href="#"><img src="../img/wii.png" alt=""></a></li>
+            <li><a href="#"><img src="../img/wii.png" alt=""></a></li>
+            <li><a href="#"><img src="../img/wii.png" alt=""></a></li>
+            <li><a href="#"><img src="../img/wii.png" alt=""></a></li>
+            <li><a href="#"><img src="../img/wii.png" alt=""></a></li>
+        </ul>
+    </div>
+    <div id="item4" class="item">
+        <h2>4F 数码</h2>
+        <ul>
+            <li><a href="#"><img src="../img/wii.png" alt=""></a></li>
+            <li><a href="#"><img src="../img/wii.png" alt=""></a></li>
+            <li><a href="#"><img src="../img/wii.png" alt=""></a></li>
+            <li><a href="#"><img src="../img/wii.png" alt=""></a></li>
+            <li><a href="#"><img src="../img/wii.png" alt=""></a></li>
+            <li><a href="#"><img src="../img/wii.png" alt=""></a></li>
+            <li><a href="#"><img src="../img/wii.png" alt=""></a></li>
+            <li><a href="#"><img src="../img/wii.png" alt=""></a></li>
+            <li><a href="#"><img src="../img/wii.png" alt=""></a></li>
+        </ul>
+    </div>
+    <div id="item5" class="item">
+        <h2>5F 书籍</h2>
+        <ul>
+            <li><a href="#"><img src="../img/wii.png" alt=""></a></li>
+            <li><a href="#"><img src="../img/wii.png" alt=""></a></li>
+            <li><a href="#"><img src="../img/wii.png" alt=""></a></li>
+            <li><a href="#"><img src="../img/wii.png" alt=""></a></li>
+            <li><a href="#"><img src="../img/wii.png" alt=""></a></li>
+            <li><a href="#"><img src="../img/wii.png" alt=""></a></li>
+            <li><a href="#"><img src="../img/wii.png" alt=""></a></li>
+            <li><a href="#"><img src="../img/wii.png" alt=""></a></li>
+            <li><a href="#"><img src="../img/wii.png" alt=""></a></li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
