@@ -906,7 +906,15 @@ input[type="checkbox"] {
     <div class="qqq"></div>
 </div> -->
 
-
+<div id='qq'>0</div>
+<script>
+let a=setInterval(aa,1000)
+function aa(){
+    let q=document.getElementById('qq').innerHTML
+    q++;
+    document.getElementById('qq').innerHTML=q;
+}
+</script>
 </body>
 
 </html>
