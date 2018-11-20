@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>计时器</title>
+    <style>
+    #count{
+        width: 300px;
+        background: #1a1a1a;
+        margin: 200px auto;
+        text-align: center;
+        padding: 20px 0;
+        color: #fff;
+    }
+    button{
+        width: 283px;
+        height:50px;
+        margin-top: 20px;
+        background: url(btn-1.png);
+        outline: none;
+        border: 0;
+        cursor: pointer;
+    }
+    button.cancel{
+        background-position-y: -50px;
+    }
+    </style>
+</head>
+<body>
+    <div id="count">
+        <span>01</span>
+        分钟
+        <span>40</span>
+        秒
+        <button class=''></button>
+    </div>
+    <script>
+    window.onload=function(){
+        let aSpan=document.getElementsByTagName('span');
+        let con=document.getElementsByTagName('button')[0];
+        let timer=null;
+        con.onclick=function(){
+            
+            this.className==''?(timer=setInterval(count,1000),count()):clearInterval(timer)
+            this.className=this.className==''?'cancel':''
+        }
+        function count(){
+            let a=parseInt(aSpan[0].innerHTML)
+            let b=parseInt(aSpan[1].innerHTML)
+            if(b<=0){
+                if(a<=0){
+                    clearInterval(timer)
+                    return;
+                }
+                else{
+                    a--;
+                    aSpan[0].innerHTML=format(a)
+                }
+            }
+            b--;
+            aSpan[1].innerHTML=format(b)
+        }
+        function format(a){
+            return a.toString().replace('/^(/d)$/','0$1')
+        }
+    }
+    </script>
+</body>
+</html>
