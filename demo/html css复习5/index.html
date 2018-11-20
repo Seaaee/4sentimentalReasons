@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>图片列表 鼠标移入移出透明度</title>
+    <style>
+    body{
+        display: flex;
+        justify-content: center;
+    }
+    #imgList{
+        display: flex;
+        max-width: 700px;
+        margin-top: 60px;
+        padding: 0 10px;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: space-around;
+    }
+    #imgList>li{
+        list-style: none;
+        margin-top: 10px;
+        border:1px solid black;
+        transition: 200ms linear
+    }
+    #imgList>li.current{
+        opacity: 0.5;
+    }
+    </style>
+</head>
+<body>
+    <ul id="imgList">
+        <li><img src="1.jpg" alt=""></li>
+        <li><img src="2.jpg" alt=""></li>
+        <li><img src="3.jpg" alt=""></li>
+        <li><img src="4.jpg" alt=""></li>
+        <li><img src="5.jpg" alt=""></li>
+        <li><img src="6.jpg" alt=""></li>
+        <li><img src="7.jpg" alt=""></li>
+        <li><img src="8.jpg" alt=""></li>
+        <li><img src="9.jpg" alt=""></li>
+        <li><img src="10.jpg" alt=""></li>
+    </ul>
+    <script>
+    window.onload=function(){
+        var lis=document.getElementsByTagName('li');
+        for(let i=0;i<lis.length;i++){
+            lis[i].onmouseover=function(){
+                this.className+='current';
+            };
+            lis[i].onmouseout=function(){
+                this.className=''
+            }
+        }
+    }
+    </script>
+</body>
+</html>
