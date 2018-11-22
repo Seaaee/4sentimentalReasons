@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>控制小方块</title>
+    <style>
+        #info {
+            padding: 10px 15px;
+            background: #f0f0f0;
+            border: 1px solid black;
+            color: green;
+            font: 12px/1.5 Courier;
+        }
+
+        #divCon {
+            position: absolute;
+            top: 150px;
+            left: 350px;
+            width: 100px;
+            height: 100px;
+            background: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id='info'>
+        <pre>
+    红色方块为键盘操作区域，您可以进行如下操作：
+
+    上：↑ 下：↓ 左：← 右：→
+                
+    Ctrl + 1 : 背景变为绿色
+    Ctrl + 2 : 背景变为黄色
+    Ctrl + 3 : 背景变为蓝色
+    Ctrl + ↑ : 放大
+    Ctrl + ↓ : 缩小
+        </pre>
+    </div>
+    <div id='divCon'></div>
+    <script>
+         'use strict'
+        window.onload = function () {
+            let divCon = document.getElementById('divCon');
+            let range = [document.documentElement.clientWidth, document.documentElement.clientHeight]
+            let bleft,bup,bright,bdw;
+            bleft=bup=bdw=bright=false;
+ 
+            // ！！
+            // ！
+            //     解决键位冲突 可以左上 右下等顺滑进行
+            // ！
+            // ！！
+
+            setInterval(function () {
+                if (bleft) {
+                    divCon.style.left = divCon.offsetLeft - 10 + 'px';
+                } else if (bright) {
+                    divCon.style.left = divCon.offsetLeft + 10 + 'px'
+                }
+
+                if (bup) {
+                    divCon.style.top = divCon.offsetTop - 10 + 'px'
+                } else if (bdw) {
+                    divCon.style.top = divCon.offsetTop + 10 + 'px'
+                }
+
+                limit()
+            }, 20)
+
+            document.onkeydown = function (event) {
+                event = event || window.event
+                let cctrlKey = event.ctrlKey;
+                console.log(event.ctrlKey)
+                switch (event.keyCode) {
+                    case 37:
+                        bleft = true;
+                        break;
+                    case 38:
+                        if (cctrlKey) {
+                            if(divCon.offsetHeight >= range[1] )break;
+                            let old=divCon.offsetHeight*0.25;
+                            divCon.style.width = divCon.style.height = divCon.offsetWidth * 1.5 + 'px'
+                            divCon.style.top=divCon.offsetTop-old+'px'
+                            divCon.style.left=divCon.offsetLeft-old+'px'
+                            break;
+                        }
+                        bup = true;
+                        break;
+                    case 39:
+                        bright = true;
+                        break;
+                    case 40:
+                        if (cctrlKey) {
+                            if(divCon.offsetHeight <= 10 )break;
+                            let old=divCon.offsetHeight*0.125;
+                            divCon.style.width = divCon.style.height = divCon.offsetHeight * 0.75 + 'px'
+                            divCon.style.left=divCon.offsetLeft+old+'px';
+                            divCon.style.top=divCon.offsetTop+old+'px';
+                            break;
+                        }
+                        bdw = true;
+                        break;
+                    case 49:
+                        cctrlKey && (divCon.style.background = "green");
+                        break;
+                    case 50:
+                        cctrlKey && (divCon.style.background = "yellow");
+                        break;
+                    case 51:
+                        cctrlKey && (divCon.style.background = "blue");
+                        break;
+                }
+                
+
+
+                /*
+                 ***   解决键位冲突！！！！  ***
+                 牛逼啊！！！    
+                */
+                return false
+            }
+
+
+            document.onkeyup = function (event) {
+                switch ((event || window.event).keyCode) {
+                    case 37:
+                        bleft = false;
+                        break;
+                    case 38:
+                        bup = false;
+                        break;
+                    case 39:
+                        bright = false;
+                        break;
+                    case 40:
+                        bdw = false;
+                        break;
+                }
+            };
+
+            function limit() {
+                //还能他妈这么写！ &&(要执行的语句)
+                divCon.offsetLeft <= 0 && (divCon.style.left = 0)
+                divCon.offsetTop <= 0 && (divCon.style.top = 0)
+                range[0] - divCon.offsetLeft - divCon.offsetWidth <= 0 && (divCon.style.left = range[0] - divCon.offsetWidth +
+                    'px')
+                range[1] - divCon.offsetTop - divCon.offsetHeight <= 0 && (divCon.style.top = range[1] - divCon.offsetHeight +
+                    'px')
+            }
+        }
+    </script>
+</body>
+
+</html>
