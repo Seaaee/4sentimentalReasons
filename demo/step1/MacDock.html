@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>模仿Mac的dock栏</title>
+    <style>
+        body {
+            padding: 0;
+            margin: 0
+        }
+
+        #menu {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="menu">
+        <img src="1.png" alt="">
+        <img src="2.png" alt="">
+        <img src="3.png" alt="">
+        <img src="4.png" alt="">
+        <img src="5.png" alt="">
+        <img src="6.png" alt="">
+        <img src="7.png" alt="">
+        <img src="8.png" alt="">
+    </div>
+    <script>
+        window.onload = function () {
+
+            let oMenu = document.getElementById('menu')
+            let aImg = document.getElementsByTagName('img')
+            let imgWid = [];
+            for (let i = 0; i < aImg.length; i++) {
+                let t = aImg[i].offsetWidth
+                imgWid.push(t);
+                aImg[i].style.width = parseInt(t/2) + 'px';
+            }
+            document.onmousemove = function (event) {
+                var event = event || window.event;
+                for (i = 0; i < aImg.length; i++) {
+                    var a = event.clientX - aImg[i].offsetLeft - aImg[i].offsetWidth / 2;
+                    var b = event.clientY - aImg[i].offsetTop - oMenu.offsetTop - aImg[i].offsetHeight / 2;
+                    var iScale = 1 - Math.sqrt(a * a + b * b) / 300;
+                    if (iScale < 0.5) iScale = 0.5;
+                    console.log(imgWid[i]*iScale)
+                    aImg[i].style.width = imgWid[i] * iScale+'px';
+                }
+            };
+        }
+    </script>
+</body>
+
+</html>
