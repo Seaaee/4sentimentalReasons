@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>移动</title>
+    <style>
+        p,button{
+            margin: 10px;
+        }
+        #zhua{
+            width:66px;
+            height: 45px;
+            position: absolute;
+            top:120px;
+            left: 20px;
+            background: url(1.gif) no-repeat
+        }
+    </style>
+</head>
+<body>
+    <button id='click'>
+        鼠标点击位置
+    </button>
+    <button id='move'>
+        鼠标移动轨迹
+    </button>
+    <p id='ifo'>选择如何移动</p>
+    <div id='zhua'></div>
+    <script>
+    window.onload=function(){
+        let oCli=document.getElementById('click')
+        let oMov=document.getElementById('move')
+        let oIfo=document.getElementById('ifo')
+        let zhua=document.getElementById('zhua')
+
+        oCli.onclick=function(event){
+            event =event||window.event;
+            event.stopPropagation();
+            this.innerHTML='鼠标点击位置 *'
+            oIfo.innerHTML='左击页面，小爪子即至'
+            document.onclick=function(event){
+                event=event||window.event
+                zhua.style.background='url(2.gif) no-repeat'
+                goMove({x:event.clientX,y:event.clientY})
+            }
+        }
+
+
+
+
+        function goMove(where){
+            clearInterval(zhua.timer);
+            zhua.timer=setInterval(function(){
+                if(where.x==zhua.offsetLeft&&where.y==zhua.offsetTop){
+                    zhua.style.background='url(1.gif) no-repeat';
+                    return
+                }
+                let dX=(where.x-zhua.offsetLeft)/5;
+                let dY=(where.y-zhua.offsetTop)/5;
+                dX=dX>0?Math.ceil(dX):Math.floor(dX);
+                dY=dY>0?Math.ceil(dY):Math.floor(dY);
+                zhua.style.left=zhua.offsetLeft+dX+'px';
+                zhua.style.top=zhua.offsetTop+dY+'px';
+            },40)
+        }
+    }
+    </script>
+</body>
+</html>
