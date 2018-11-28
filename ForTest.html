@@ -941,6 +941,15 @@ input[type="checkbox"] {
 
 　　}
 
+
+    function Sub(props){
+        Super.call(this,props)
+        Sub.ownProp=....
+    }
+
+    Sub.prototype=Object.creat(Super.prototype)
+    Sub.prototype.constructor=Sub
+
 普通对象就是 深/浅拷贝
 
   -->
