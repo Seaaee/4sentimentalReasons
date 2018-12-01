@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>轮播页面（面向对象</title>
+    <style>
+        body {
+            background: black
+        }
+
+        html,
+        body,
+        ul,
+        li {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul,
+        li {
+            list-style: none;
+        }
+
+        #box {
+            height: 170px;
+            width: 490px;
+            position: relative;
+            margin: 0 auto;
+            margin-top: 200px;
+            border: 8px solid gray;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        #list {
+            position: absolute;
+            left: 0;
+            top: 0;
+            /* overflow: hidden; */
+            cursor: pointer;
+        }
+
+        #list li {
+            /* overflow: hidden; */
+            width: 490px;
+            height: 170px;
+        }
+        .count {
+            position: absolute;
+            bottom: 0;
+            right: 5px;
+        }
+        .count li{
+            width: 20px;
+            height:20px;
+            border-radius: 20px;
+            opacity: 0.7;
+            background: #f90;
+            margin-right: 5px;
+            cursor: pointer;
+            color:#fff;
+        }
+        .count li:hover{
+            background: #f60;
+            opacity: 1;
+            font-weight: 800;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <ul id='list'>
+            <li><img src="01.jpg" alt=""></li>
+            <li><img src="02.jpg" alt=""></li>
+            <li><img src="03.jpg" alt=""></li>
+            <li><img src="04.jpg" alt=""></li>
+            <li><img src="05.jpg" alt=""></li>
+        </ul>
+    </div>
+    <script>
+        window.onload = function () {
+
+
+            //！！面向对象！！
+            let AutoPlay = function () {
+                this.init()
+            };
+
+            AutoPlay.prototype = {
+                init: function () {
+                    let oThis=this;
+                    this.oBox = document.getElementById('box')
+                    this.oUl = this.oBox.getElementsByTagName('ul')[0];
+                    this.oImg = this.oUl.getElementsByTagName('img')
+                    this.creatBtn()
+                    this.oBtn=this.oCount.getElementsByTagName('li')
+                    this.nowPage=0;
+                    this.autoTimer=null;
+                    this.timer=null;
+                    //以上是各种get等准备工作
+
+                    //以下是launch轮播
+                    this.setAutoInterval()
+                    this.oBox.onmouseover=function(){clearInterval(oThis.autoTimer)}
+                    this.oBox.onmouseout=this.setAutoInterval
+                    for(let i=0;i<this.oBtn.length;i++){
+                        this.oBtn[i].index=i;
+                        this.oBtn[i].onmouseover=function(){
+                            oThis.nowPage=this.index;
+                            oThis.turnPage()
+                        }
+                    }
+                },
+                
+                setAutoInterval:function(){
+                    this.autoTimer=setInterval(function(){
+                        this.next()
+                    },3000)
+                },
+
+                // 灵活适应不同数量图片轮播   全加到fragment一次添加到dom一次刷新
+                creatBtn: function () {
+                    this.oCount = document.createElement('ul')
+                    let oFrag = document.createDocumentFragment();
+                    this.oCount.className = 'count';
+                    for (let i = 0; i < this.oImg.length; i++) {
+                        let oLi = document.createElement('li');
+                        oLi.innerHTML = i + 1;
+                        oFrag.appendChild(oLi)
+                    }
+                    this.oCount.appendChild(oFrag)
+                    this.oBox.appendChild(this.oCount)
+                },
+
+                //自动轮播
+                next:function(){
+                    this.nowPage++;
+
+                    //这个语句！！  
+                    (this.nowPage==this.oImg.length)&&(this.nowPage=0)
+                    turnPage()
+                },
+
+                //该哪个btn，调用doMove切换到相应图片
+                turnPage:function(){
+                    this.doMove(-(this.nowPage*this.oImg[0].offsetHeight))
+                },
+
+                //图片滑动到指定目的
+                doMove(iTar){
+                    clearInterval(this.timer)
+                    let speed=(iTar-this.oUl.offsetTop)/5;
+                    speed=speed>0?Math.ceil(speed):Math.floor(speed)
+                    this.timer=setInterval(function(){
+                        this.oUl.offsetTop==iTar?clearInterval(this.timer):this.oUl.style.top=this.oUl.offsetTop+speed+'px'
+                    },30)
+                }
+            }
+
+
+            let launchhh=new AutoPlay()
+        }
+    </script>
+</body>
+
+</html>
