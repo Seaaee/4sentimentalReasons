@@ -38,11 +38,15 @@
             let oMenu = document.getElementById('menu')
             let aImg = document.getElementsByTagName('img')
             let imgWid = [];
+
+            //将dock每一项原offsetWidth存入imgWid
             for (let i = 0; i < aImg.length; i++) {
                 let t = aImg[i].offsetWidth
                 imgWid.push(t);
                 aImg[i].style.width = parseInt(t/2) + 'px';
             }
+
+            //看不懂的数学式
             document.onmousemove = function (event) {
                 var event = event || window.event;
                 for (i = 0; i < aImg.length; i++) {
