@@ -104,9 +104,9 @@
                     //以上是各种get等准备工作
 
                     //以下是launch轮播
-                    this.setAutoInterval()
+                    setInterval(this.setAutoInterval,300) 
                     this.oBox.onmouseover=function(){clearInterval(oThis.autoTimer)}
-                    this.oBox.onmouseout=this.setAutoInterval
+                    this.oBox.onmouseout=setInterval(this.setAutoInterval,300) 
                     for(let i=0;i<this.oBtn.length;i++){
                         this.oBtn[i].index=i;
                         this.oBtn[i].onmouseover=function(){
@@ -116,10 +116,10 @@
                     }
                 },
                 
-                setAutoInterval:function(){
-                    this.autoTimer=setInterval(function(){
-                        this.next()
-                    },3000)
+                setAutoInterval:function(t){
+                    return function(){
+                        oThis.next()
+                    }
                 },
 
                 // 灵活适应不同数量图片轮播   全加到fragment一次添加到dom一次刷新
@@ -142,7 +142,7 @@
 
                     //这个语句！！  
                     (this.nowPage==this.oImg.length)&&(this.nowPage=0)
-                    turnPage()
+                    this.turnPage()
                 },
 
                 //该哪个btn，调用doMove切换到相应图片
@@ -151,12 +151,13 @@
                 },
 
                 //图片滑动到指定目的
-                doMove(iTar){
+                doMove:function(iTar){
                     clearInterval(this.timer)
                     let speed=(iTar-this.oUl.offsetTop)/5;
+                    let othis=this
                     speed=speed>0?Math.ceil(speed):Math.floor(speed)
                     this.timer=setInterval(function(){
-                        this.oUl.offsetTop==iTar?clearInterval(this.timer):this.oUl.style.top=this.oUl.offsetTop+speed+'px'
+                        othis.oUl.offsetTop==iTar?clearInterval(othis.timer):othis.oUl.style.top=othis.oUl.offsetTop+speed+'px'
                     },30)
                 }
             }
