@@ -62,7 +62,7 @@
             cursor: pointer;
             color:#fff;
         }
-        .count li:hover{
+        .count .current{
             background: #f60;
             opacity: 1;
             font-weight: 800;
@@ -102,23 +102,21 @@
                     this.timer=null;
                     //以上是各种get等准备工作
 
-                    //以下是launch轮播
-                    this.autoTimer=setInterval(this.setAutoInterval,300) 
+                    //以下是launch
+                    this.autoTimer=setInterval(this.setAutoInterval(oThis),3000) 
                     this.oBox.onmouseover=function(){clearInterval(oThis.autoTimer)}
-                    this.oBox.onmouseout=setInterval(this.setAutoInterval,300) 
+                    this.oBox.onmouseout=setInterval(this.setAutoInterval(oThis),3000) 
                     for(let i=0;i<this.oBtn.length;i++){
-                        this.oBtn[i].index=i;
                         this.oBtn[i].onmouseover=function(){
-                            oThis.nowPage=this.index;
+                            oThis.nowPage=i;
                             oThis.turnPage()
                         }
                     }
-                    
                 },
                 
-                setAutoInterval:function(){
+                setAutoInterval:function(o){
                     return function(){
-                        oThis.next()
+                        o.next()
                     }
                 },
 
@@ -146,6 +144,8 @@
 
                 //该哪个btn，调用doMove切换到相应图片
                 turnPage:function(){
+                    for(let i=0;i<this.oBtn.length;i++)this.oBtn[i].className='';
+                    this.oBtn[this.nowPage].className='current'
                     this.doMove(-(this.nowPage*this.oImg[0].offsetHeight))
                 },
 
