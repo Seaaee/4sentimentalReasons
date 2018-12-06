@@ -104,8 +104,12 @@
 
                     //以下是launch
                     this.autoTimer=setInterval(this.setAutoInterval(oThis),3000) 
-                    this.oBox.onmouseover=function(){clearInterval(oThis.autoTimer)}
-                    this.oBox.onmouseout=setInterval(this.setAutoInterval(oThis),3000) 
+                    this.oBox.onmouseover=function(){
+                        clearInterval(oThis.autoTimer)
+                    }
+                    this.oBox.onmouseout=function(){
+                        oThis.autoTimer=setInterval(oThis.setAutoInterval(oThis),3000)
+                    }
                     for(let i=0;i<this.oBtn.length;i++){
                         this.oBtn[i].onmouseover=function(){
                             oThis.nowPage=i;
@@ -138,6 +142,8 @@
                 next:function(){
                     this.nowPage++;
                     //这个语句！！  
+                    let a=this.nowPage
+                    console.log(a);
                     (this.nowPage==this.oImg.length)&&(this.nowPage=0)
                     this.turnPage()
                 },
