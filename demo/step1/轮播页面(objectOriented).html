@@ -90,6 +90,7 @@
             };
 
             AutoPlay.prototype = {
+                constructor:AutoPlay,
                 init: function () {
                     let oThis=this;
                     this.oBox = document.getElementById('box')
@@ -98,6 +99,7 @@
                     this.creatBtn()
                     this.oBtn=this.oCount.getElementsByTagName('li')
                     this.nowPage=0;
+                    this.oBtn[this.nowPage].className='current'
                     this.autoTimer=null;
                     this.timer=null;
                     //以上是各种get等准备工作
