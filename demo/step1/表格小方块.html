@@ -90,14 +90,15 @@
                     this.rgb = 0
 
                     this.btn.onclick=function(){
-                        let qq='time'
-                        console.time(qq)
+                        //测试 appendChild和innerHTML
+                        console.time('time')
                         oThis.creatBox(oThis.row.value,oThis.col.value)
-                        console.timeEnd(qq)
+                        console.timeEnd('time')
                     }
                 },
                 
                 //frament添加 vs 直接table添加
+                //结论是差不多
                 creatBox:function(row,col){
                     let body=document.body
                     // let oFrag=document.createDocumentFragment()
