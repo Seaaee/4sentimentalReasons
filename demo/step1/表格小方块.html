@@ -16,9 +16,6 @@
         #contain{
             height: 80px;
         }
-        #sett{
-            line-height: 28px
-        }
         #sett input{
             width: 50px;
             border: 2px solid #cccccc;
@@ -28,7 +25,7 @@
         }
         #go{
             background: black;
-            padding: 0 4px;
+            padding: 4px 4px;
             border: 0;
             border-radius: 5px;
             color: #fff;
@@ -38,11 +35,16 @@
         }
         #msg{
             display: none;
-            margin-left: 70px
-        }
-        #rgb{
+            margin-top: 10px;
             height: 25px;
+            line-height: 25px;
+            align-content: center
+        }
+        #msg em{
+            display: inline-block;
             width: 25px;
+            height: 25px;
+            margin-right: 5px;
         }
         table{
             border: 1px solid #000;
@@ -67,8 +69,6 @@
             <button id='go'>生成表格</button>
         </div>
         <div id="msg">
-            <span id='s1'></span>
-            <span id="s2">,颜色为:<em></em> <span id="rgb"></span></span>
         </div>
     </div>
     <script>
@@ -80,28 +80,58 @@
                 constructor : creatTab,
                 init: function () {
                     let oThis=this
+                    this.bbody=document.body
                     this.col = document.getElementById('col')
                     this.row = document.getElementById('row')
                     this.btn = document.getElementById('go')
                     this.msg = document.getElementById('msg')
-                    this.msgsNum = document.getElementById('s1')
-                    this.msgRgb = document.getElementById('rgb')
                     this.table=null
                     this.rgb = 0
 
-                    this.btn.onclick=function(){
+                    
+                
+                    this.btn.onclick=function(event){
+                        event=event||window.event
+                        if(!oThis.numTest(oThis.row.value)||!oThis.numTest(oThis.col.value)){
+                            let tip;
+                            while(tip!=='好的我改')tip=prompt('您输入的不对[微笑]');
+                            return
+                        }
+                        oThis.msg.display='none'
                         //测试 appendChild和innerHTML
+                        //结论是差不多
+                        //replace用innerHTML 只是添加用appendChild
+                        //这应该用innerHTML 
+                        //但是懒得改了 msg那用innerHTML
+                        oThis.table&&oThis.bbody.removeChild(oThis.table)
+                        //frament添加 vs 直接table添加
+                        // let oFrag=document.createDocumentFragment()
+                        // oFrag.appendChild(oThis.creatBox(oThis.row.value,oThis.col.value))
                         console.time('time')
-                        oThis.creatBox(oThis.row.value,oThis.col.value)
+                        oThis.bbody.appendChild(oThis.creatBox(oThis.row.value,oThis.col.value))
+                        oThis.table=oThis.bbody.lastChild
                         console.timeEnd('time')
+                        
+                        oThis.table.onclick=function(event){
+                            event=event||window.event
+                            let tar=event.target||event.srcElement
+                            if(tar.tagName==='TD'){
+                                oThis.msg.style.display='flex'
+                                oThis.msg.innerHTML = "<span>\u533a\u57df\u6570\u5b57\u662f\uff1a"+tar.innerHTML+"\uff0c\u989c\u8272\u4e3a\uff1a"+"</span><em style=\"background:"+ tar.style.backgroundColor +";\"></em><span>"+tar.style.backgroundColor+"</span>";	
+                            }
+                        }
                     }
+
+
+                },
+
+                numTest:function(str){
+                    let regEx=/^((?!0)\d{1,2}|100)$/
+                    return regEx.test(str)
                 },
                 
-                //frament添加 vs 直接table添加
-                //结论是差不多
+                
                 creatBox:function(row,col){
-                    let body=document.body
-                    // let oFrag=document.createDocumentFragment()
                     let oTable=document.createElement('table')
                     let oTbody=document.createElement('tbody')
                     for(let i=0;i<row;i++){
@@ -110,17 +140,13 @@
                             this.rgb=this.randomColor()
                             let td=document.createElement('td')
                             td.style.background='#'+this.rgb;
-                            td.innerText=this.randomRange(1,15).toString().replace(/^(\d)$/,'0$1')
+                            td.innerText=this.randomRange(1,99).toString().replace(/^(\d)$/,'0$1')
                             tr.appendChild(td)
                         }
                         oTbody.appendChild(tr)
                     }
                     oTable.appendChild(oTbody)
-                    // oFrag.appendChild(oTable)
-                    this.table&&body.removeChild(this.table)
-                    body.appendChild(oTable)
-                    this.table=body.lastChild
-
+                    return oTable
                 },
                 randomColor: function () {
                     let a = this.randomRange(0, 0xFFFFFF).toString(16)
