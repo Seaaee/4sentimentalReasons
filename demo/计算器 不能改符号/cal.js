@@ -68,7 +68,7 @@ var cal = {
       var o = cal.data.showInput.innerHTML;
       switch (value) {
         case "±":
-          al.unaryOper(function () {
+          cal.unaryOper(function () {
             if (o === "0")
               return "0"
             else if (o[0] === "-")
