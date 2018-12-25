@@ -14,21 +14,23 @@ var colors = [
     "#77B1A9",
     "#73A857"
   ];
-  var currentQuote = "",
-    currentAuthor = "";
-
+  
   function getQuote() {
+    var currentQuote = "",
+      currentAuthor = "";
     $.ajax({
       headers: {
         "X-Mashape-Key": "OivH71yd3tmshl9YKzFH7BTzBVRQp1RaKLajsnafgL2aPsfP9V",
-        Accept: "application/json",
+        "Accept": "application/json",
         "Content-Type": "application/x-www-form-urlencoded"
       },
       url: "https://andruxnet-random-famous-quotes.p.mashape.com/cat=",
       success: function(r) {
-        if (typeof r === "string") {
-          r = JSON.parse(r);
-        }
+        // if (typeof r === "string") {
+        //   console.log(r)
+        //   r = JSON.parse(r[0]);
+        // }
+        r=r[0]
         currentQuote = r.quote;
         currentAuthor = r.author;
         $(".quote-text").animate(
