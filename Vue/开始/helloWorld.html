@@ -6,18 +6,27 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-
+    <style>
+    </style>
 </head>
 <body>
     <div id="app">
         {{ message }}
-        <div id='bindTry'>
-            <span v-bind:title="messageB">悬停几秒</span>
-        </div>
+        <span v-bind:title="messageB">悬停几秒</span>
         <p v-if="seen">NOW U SEE ME BUT IF THE 'SEEN' PORPERTY IS FALSE</p>
+        <!-- 
+            这不对
+        // console.log(app.data.seen)
+        //
+        // 得这的
+        // console.log(app.seen) 正确访问姿势 
+        -->
         <li v-for="name in theNames">
             {{name.text}}
         </li>
+        <div id="test">
+            w     w
+        </div>
     </div>
     <script src='helloWorld.js'></script>
 </body>
