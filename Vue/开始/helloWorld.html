@@ -28,6 +28,11 @@
         <li v-for="name in theNames">
             {{name.text}}
         </li>
+        <todo-item
+        v-for='i in componentList'
+        v-bind:todo='i'
+        v-bind:id='i.id'
+        ></todo-item>
     </div>
     <script src='helloWorld.js'></script>
 </body>
