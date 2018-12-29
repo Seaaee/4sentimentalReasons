@@ -10,8 +10,10 @@ let app=new Vue({
             {text:'George Harrison'},
             {text:'Ringo Starr'}
         ]
+    },
+    methods:{
+        reverseMess:function(){
+            this.message=this.message.split('').reverse().join('')
+        }
     }
 })
-
-let a=document.getElementById('test')
-// a.innerText='w    w'

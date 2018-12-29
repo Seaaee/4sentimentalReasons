@@ -12,7 +12,11 @@
 <body>
     <div id="app">
         {{ message }}
-        <span v-bind:title="messageB">悬停几秒</span>
+        <button v-on:click='reverseMess'>点我</button>
+        <p>
+            <input type="text" v-model='message'>
+        </p>
+        <p v-bind:title="messageB">悬停几秒</p>
         <p v-if="seen">NOW U SEE ME BUT IF THE 'SEEN' PORPERTY IS FALSE</p>
         <!-- 
             这不对
@@ -24,9 +28,6 @@
         <li v-for="name in theNames">
             {{name.text}}
         </li>
-        <div id="test">
-            w     w
-        </div>
     </div>
     <script src='helloWorld.js'></script>
 </body>
