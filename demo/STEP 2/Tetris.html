@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+    <meta
+        http-equiv="X-UA-Compatible"
+        content="ie=edge"
+    >
+    <title>俄罗斯方块</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%
+        }
+
+        ul,
+        li {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            color: rgb(36, 34, 34);
+            font-size: 12px;
+            display: flex;
+            justify-content: center;
+        }
+
+        #play_area,
+        #play_menu {
+            margin-top: 100px;
+        }
+
+        #play_area {
+            display: flex;
+            width: 300px;
+            height: 480px;
+            background: #fefefe;
+            border-radius: 2px;
+            box-shadow: 0 0 8px #e2e2e2
+        }
+
+        #play_area .play_cell {
+            width: 19px;
+            height: 19px;
+
+        }
+
+        #play_area .play_cell.active {
+            background: #666;
+            border: 1px solid #fefefe
+        }
+
+
+        #play_menu {
+            margin-left: 80px;
+            padding-top: 20px;
+            font-size: 1rem
+        }
+
+        #play_menu #play_nextType {
+            width: 60px;
+            height: 60px;
+        }
+
+        #play_menu #play_nextType .play_cell {
+            width: 14px;
+            height: 14px;
+        }
+
+        #play_menu #play_nextType .play_cell,
+        #play_area .play_cell {
+            border: 1px solid #eee;
+            margin: 0 -1px -1px 0;
+        }
+
+        button {
+            background: #fefefe;
+            border: 1px solid #eee;
+            border-radius: 2px;
+            outline: none;
+            cursor: pointer;
+            width: 100%;
+            transition:all 0.3s ease-in;
+        }
+
+        button:hover{
+animation: rainbow 1s ease-in infinite forwards;
+        }
+        @keyframes rainbow{
+0% { background: rgba(156, 26, 26, 0.322); }
+50% { background: rgba(150, 108, 32, 0.63); }
+100% { background: rgba(153, 205, 50, 0.534); }
+        }
+
+        #play_btn_start {
+            height: 70px;
+            width: 160px;
+            font-size: 1.3rem;
+            color: rgb(36, 61, 88);
+            font-weight: bolder;
+        }
+
+        #play_menu ul {
+            display: flex;
+            margin-top: 20px;
+            width: 180px
+        }
+
+        #play_menu ul li {
+            width: 50px;
+            margin-right: 10px;
+            flex: auto
+        }
+
+        #play_menu ul li button {
+            height: 50px;
+            border-radius: 50%
+        }
+
+        #play_score {
+            width: 180px;
+            height: 160px;
+            font-size: 8rem;
+            line-height: 160px;
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold';
+            
+        }
+
+    </style>
+</head>
+
+<body>
+    <main
+        class='wrap'
+        id='play_area'
+    >
+    </main>
+    <nav id='play_menu'>
+        <p>下一个：</p>
+        <div id="play_nextType"></div>
+        <button
+            id="play_btn_start"
+            class='play_btn'
+        >开始
+        </button>
+        <ul>
+            <li><button>慢</button></li>
+            <li><button>还行</button></li>
+            <li><button>快</button></li>
+        </ul>
+        <div id='play_score'>0</div>
+    </nav>
+
+</body>
+
+</html>
