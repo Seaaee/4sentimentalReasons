@@ -49,13 +49,10 @@
             box-shadow: 0 0 8px #e2e2e2
         }
 
-        #play_area .play_cell {
+        #play_area .active {
+            position: absolute;
             width: 19px;
             height: 19px;
-
-        }
-
-        #play_area .play_cell.active {
             background: #666;
             border: 1px solid #fefefe
         }
@@ -181,7 +178,45 @@
     </nav>
     <script src="Jq/jquery-1.6.2.min.js"></script>
     <script>
+        'use strict';
 
+        class Tetris{
+            constructor(){
+                this.playArea=document.getElementById('play_area')
+                this.activeCell=document.getElementsByClassName('active');
+            }
+            /**
+                移动 move()  20px
+            */
+            move(){
+                document.onkeydown=function(e){
+                    let left=parseInt(this.activeCell.style.left)?parseInt(this.activeCell.style.left):0,
+                        top=(this.activeCell.style.top)?parseInt(this.activeCell.style.top):0;
+
+                    const key=e.keyCode;
+                    switch(key){
+                        case 37:
+                            this.activeCell.style.left=`${left-20}px`;
+                            break;
+                        case 38:
+                            // 变形
+                            break;
+                        case 39:
+                            this.activeCell.style.left=`${left+20}px`;
+                            break;
+                        case 40:
+                            this.activeCell.style.top=`${top+20}px`;
+                            break;
+                    }
+                }
+            }
+
+            init(){
+                let activeModel=document.createElement('div')
+                activeModel.className='active'
+                this.playArea.appendChild(activeModel)
+            }
+        }
     </script>
 </body>
 
