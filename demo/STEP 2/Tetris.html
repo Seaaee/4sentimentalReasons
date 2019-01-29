@@ -33,6 +33,7 @@
             font-size: 12px;
             display: flex;
             justify-content: center;
+            background: #f6f6f6
         }
 
         #play_area,
@@ -44,17 +45,21 @@
             display: flex;
             width: 300px;
             height: 480px;
-            background: #fefefe;
             border-radius: 2px;
-            box-shadow: 0 0 8px #e2e2e2
+            box-shadow: 0 0 8px #000;
+            background-image:linear-gradient(transparent 0,rgba(6, 6, 6, 0.744) 1px),
+                             linear-gradient(90deg,transparent 0,rgba(6, 6, 6, 0.744) 1px);
+            background-size: 20px 20px
         }
 
-        #play_area .active {
-            position: absolute;
+        #play_area .play_cell{
             width: 19px;
             height: 19px;
-            background: #666;
-            border: 1px solid #fefefe
+            border: 1px solid transparent;
+            background: #444;
+        }
+        #play_area .active {
+            position: absolute;
         }
 
 
@@ -184,9 +189,21 @@
             constructor(){
                 this.playArea=document.getElementById('play_area')
                 this.activeCell=document.getElementsByClassName('active');
+                this.playSize={
+                    width:300,
+                    height:480,
+                    left:this.getDistance(true),
+                    top:this.getDistance(false),
+                }
             }
+            getDistance(r){
+                return r?this.playArea.offsetLeft:this.playArea.offsetTop
+            }
+
+
             /**
                 移动 move()  20px
+                判断是否可以移动
             */
             move(){
                 document.onkeydown=function(e){
@@ -196,16 +213,23 @@
                     const key=e.keyCode;
                     switch(key){
                         case 37:
+                            if(left+20<this.playSize.width+this.playSize.left)
                             this.activeCell.style.left=`${left-20}px`;
                             break;
                         case 38:
                             // 变形
                             break;
                         case 39:
-                            this.activeCell.style.left=`${left+20}px`;
+                            if(left+20>=this.playSize.width+this.playSize.left){
+                                this.activeCell.style.left=`${left+20}px`;
+                            }
                             break;
-                        case 40:
-                            this.activeCell.style.top=`${top+20}px`;
+                        case 40: 
+                            if(top+20>=this.playSize.height+this.playSize.top){
+                                this.activeCell.style.top=`${top+20}px`;
+                            }
+                            break;
+                        default:
                             break;
                     }
                 }
@@ -213,9 +237,15 @@
 
             init(){
                 let activeModel=document.createElement('div')
-                activeModel.className='active'
+                activeModel.className='play_cell active'
+                activeModel.style.top=`${this.playSize.top}px`
+                activeModel.style.left=`${this.playSize.left+(parseInt(this.playSize.width/20)-1)*10}px`
                 this.playArea.appendChild(activeModel)
             }
+        }
+        window.onload=()=>{
+            let go=new Tetris();
+            go.init()
         }
     </script>
 </body>
