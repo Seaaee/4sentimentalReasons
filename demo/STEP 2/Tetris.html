@@ -195,11 +195,35 @@
                     left:this.getDistance(true),
                     top:this.getDistance(false),
                 }
+                this.cellSize=20;
             }
             getDistance(r){
                 return r?this.playArea.offsetLeft:this.playArea.offsetTop
             }
 
+
+
+            /*
+                判断是否可以移动
+                @return 
+            **/
+            canMove(r){
+                let tops=[],lefts=[];
+                Array.from(this.activeCell).forEach((itm)=>{
+                    tops.push(itm.style.top)
+                    lefts.push(itm.style.left)
+                })
+                let top=Math.min(...tops),
+                    left=Math.min(...lefts),
+                    right=Math.max(...lefts);
+                if(r=1){
+                    return left-20<=this.playSize.left?false:true;
+                }else if(r=2){
+                    return right+20>=this.playSize.left+this.playSize.width?false:true;
+                }else{
+                    return top+20>=this.playSize.top+this.playSize.height?false:true;
+                }
+            }
 
             /**
                 移动 move()  20px
@@ -207,26 +231,31 @@
             */
             move(){
                 document.onkeydown=function(e){
-                    let left=parseInt(this.activeCell.style.left)?parseInt(this.activeCell.style.left):0,
-                        top=(this.activeCell.style.top)?parseInt(this.activeCell.style.top):0;
-
+                    
                     const key=e.keyCode;
                     switch(key){
                         case 37:
-                            if(left+20<this.playSize.width+this.playSize.left)
-                            this.activeCell.style.left=`${left-20}px`;
+                            if(this.canMove(1)){
+                                for(let cell of this.activeCell){
+                                    cell.style.left=`${pareseInt(cell.style.left) - 20}px`
+                                }
+                            }
                             break;
                         case 38:
                             // 变形
                             break;
                         case 39:
-                            if(left+20>=this.playSize.width+this.playSize.left){
-                                this.activeCell.style.left=`${left+20}px`;
+                            if(this.canMove(2)){
+                                for(cell of this.activeCell){
+                                    cell.style.left=`${pareseInt(cell.style.left)+20}px`
+                                }
                             }
                             break;
                         case 40: 
-                            if(top+20>=this.playSize.height+this.playSize.top){
-                                this.activeCell.style.top=`${top+20}px`;
+                            if(this.canMove(0)){
+                                for(cell of this.activeCell){
+                                    cell.style.top=`${parseInt(cell.style.top)+20}px`
+                                }
                             }
                             break;
                         default:
@@ -244,9 +273,11 @@
             }
         }
         window.onload=()=>{
+            const block1=[[1,0],[1,0],[1,1]];
             let go=new Tetris();
             go.init()
         }
+
     </script>
 </body>
 
