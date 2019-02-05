@@ -178,26 +178,96 @@
         </ul>
         <div id='play_score'>0</div>
     </nav>
-    <script src="Jq/jquery-1.6.2.min.js"></script>
     <script>
         'use strict';
 
         class Tetris{
             constructor(){
-                this.playArea=document.getElementById('play_area')
                 this.activeCell=document.getElementsByClassName('active');
+                this.nowArr=undefined;
+                this.playArea=document.getElementById('play_area')
                 this.playSize={
                     width:300,
                     height:480,
                     left:this.getDistance(true),
-                    top:this.getDistance(false),
+                    top:this.getDistance(false)
                 }
 
                 this.CELLSIZE=20;
-                this.BLOCK1=[[1,0],[1,0],[1,0],[1,1]]
+                this.BLOCK1=[[1,0],[1,0],[1,1]]
             }
             getDistance(r){
                 return r?this.playArea.offsetLeft:this.playArea.offsetTop
+            }
+
+
+            getMidIndexArr(len) {
+                let mid = Math.floor(len / 2)
+                return Array.from(new Array(len), (z, index) => index - mid)
+            }
+
+
+            getActivePos(){
+                let tops = [], lefts = [];
+                Array.from(this.activeCell).forEach((itm) => {
+                    tops.push(parseInt(itm.style.top))
+                    lefts.push(parseInt(itm.style.left))
+                })
+                let bottom = Math.max(...tops),
+                    left = Math.min(...lefts),
+                    right = Math.max(...lefts),
+                    top = Math.min(...tops);
+                return{
+                    bottom:bottom,
+                    left:left,
+                    right:right,
+                    top:top
+                }
+            }
+
+
+
+
+
+            /**
+                ↑ 变形
+                变形之后的left是之前的left   top是mid top
+            */
+            turn(arr){
+                let col=arr.length,
+                    row=arr[0].length,
+                    arrTurn=[];
+                for(let i=0;i<row;i++){
+                    let tmp=[]
+                    for(let j=0;j<col;j++){
+                        tmp.push(arr[col-1-j][i])
+                    }
+                    arrTurn.push(tmp)
+                }
+                this.nowArr=[...arrTurn]
+
+                console.log(arrTurn)
+
+                let {left,top,bottom}=this.getActivePos(),
+                    midHeight=Math.ceil((top+bottom)/40),
+                    lefts=[],tops=[];
+                for(let i=0;i<arrTurn.length;i++){
+                    let colDex=this.getMidIndexArr(arrTurn.length)
+                    for(let j=0;j<arrTurn[i].length;j++){
+                        if(arrTurn[i][j]===1){
+                            lefts.push(left+j*this.CELLSIZE);
+                            tops.push((midHeight+colDex[i])*this.CELLSIZE)
+                        }
+                    }
+                }
+                console.log(lefts)
+                console.log(tops)
+                return {
+                    lefts:lefts,
+                    tops:tops,
+                }
+                
+                
             }
 
 
@@ -206,21 +276,13 @@
                 @param r   //方向 1左  2右  else下
             */
             canMove(r){ 
-                let tops=[],lefts=[];
-                Array.from(this.activeCell).forEach((itm)=>{
-                    tops.push(parseInt(itm.style.top))
-                    lefts.push(parseInt(itm.style.left))
-                })
-                let top=Math.max(...tops),
-                    left=Math.min(...lefts),
-                    right=Math.max(...lefts);
-                console.log(tops)
+                let {bottom,left,right}=this.getActivePos()
                 if(r===1){
                     return left<=this.playSize.left?false:true;
                 }else if(r===2){
                     return right+this.CELLSIZE>=this.playSize.left+this.playSize.width?false:true;
                 }
-                return top+this.CELLSIZE>=this.playSize.top+this.playSize.height?false:true
+                return bottom+this.CELLSIZE>=this.playSize.top+this.playSize.height?false:true
             }
 
 
@@ -241,7 +303,11 @@
                             }
                             break;
                         case 38:
-                            // 变形
+                            let {tops,lefts}=othis.turn(othis.nowArr);
+                            for(let i in othis.activeCell){
+                                othis.activeCell[i].style.left=`${lefts[i]}px`;
+                                othis.activeCell[i].style.top=`${tops[i]}px`
+                            }
                             break;
                         case 39:
                             if(othis.canMove(2)){
@@ -264,6 +330,7 @@
             }
 
 
+            
             /**
             *  新的小方块出现在頂端
             *  @param i
@@ -271,11 +338,10 @@
             *  @param blcok
             */
             initDraw(block){
-                for(let i=0;i<block.length;i++){
-                    let rowLen=block[i].length
-                    let mid=Math.ceil(rowLen/2)
-                    let rowdex=Array.from(new Array(rowLen),(a,index)=>index-mid)
-                    for (let j=0;j<rowLen;j++){
+                let len=block.length
+                for(let i=0;i<len;i++){
+                    let rowdex=this.getMidIndexArr(block[i].length)
+                    for (let j=0;j<len;j++){
                         if(block[i][j]===1){
                             let newBlock=document.createElement('div')
                             newBlock.className='play_cell active'
@@ -288,7 +354,8 @@
             }
 
             init(){
-                this.initDraw(this.BLOCK1);
+                this.nowArr=[...this.BLOCK1];
+                this.initDraw(this.nowArr);
                 this.move()
             }
             
