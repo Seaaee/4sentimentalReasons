@@ -11,6 +11,7 @@
         http-equiv="X-UA-Compatible"
         content="ie=edge"
     >
+    <link rel="shortcut icon" href="2k.jpg" type="image/x-icon">
     <title>俄罗斯方块</title>
     <style>
         html,
@@ -231,22 +232,21 @@
 
             /**
                 ↑ 变形
-                变形之后的left是之前的left   top是mid top
+                变形之后的left是之前的left   top是mid top   必定不会出界
             */
-            turn(arr){
-                let col=arr.length,
-                    row=arr[0].length,
+            turn(){
+                let col=this.nowArr.length,
+                    row=this.nowArr[0].length,
                     arrTurn=[];
                 for(let i=0;i<row;i++){
                     let tmp=[]
                     for(let j=0;j<col;j++){
-                        tmp.push(arr[col-1-j][i])
+                        tmp.push(this.nowArr[col-1-j][i])
                     }
                     arrTurn.push(tmp)
                 }
                 this.nowArr=[...arrTurn]
 
-                console.log(arrTurn)
 
                 let {left,top,bottom}=this.getActivePos(),
                     midHeight=Math.ceil((top+bottom)/40),
@@ -260,8 +260,6 @@
                         }
                     }
                 }
-                console.log(lefts)
-                console.log(tops)
                 return {
                     lefts:lefts,
                     tops:tops,
@@ -303,7 +301,7 @@
                             }
                             break;
                         case 38:
-                            let {tops,lefts}=othis.turn(othis.nowArr);
+                            let {tops,lefts}=othis.turn();
                             for(let i in othis.activeCell){
                                 othis.activeCell[i].style.left=`${lefts[i]}px`;
                                 othis.activeCell[i].style.top=`${tops[i]}px`
@@ -354,6 +352,7 @@
             }
 
             init(){
+                // this.nowArr=Math.random
                 this.nowArr=[...this.BLOCK1];
                 this.initDraw(this.nowArr);
                 this.move()
