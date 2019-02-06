@@ -255,10 +255,13 @@
                     let colDex=this.getMidIndexArr(arrTurn.length)
                     for(let j=0;j<arrTurn[i].length;j++){
                         if(arrTurn[i][j]===1){
-                            lefts.push(left+j*this.CELLSIZE);
+                            lefts.push(left + j * this.CELLSIZE);
                             tops.push((midHeight+colDex[i])*this.CELLSIZE)
                         }
                     }
+                }
+                if(Math.max(...lefts)> this.playSize.left + this.playSize.width - 20){
+                    lefts.forEach((itm,index)=>lefts[index]=itm-20)
                 }
                 return {
                     lefts:lefts,
@@ -302,6 +305,7 @@
                             break;
                         case 38:
                             let {tops,lefts}=othis.turn();
+
                             for(let i in othis.activeCell){
                                 othis.activeCell[i].style.left=`${lefts[i]}px`;
                                 othis.activeCell[i].style.top=`${tops[i]}px`
