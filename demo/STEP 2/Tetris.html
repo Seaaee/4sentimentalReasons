@@ -205,6 +205,7 @@
                     top: this.getDistance(false)
                 }
 
+                this.speed=600;
                 this.CELLSIZE = 20;
                 this.BLOCK = {
                     BLOCK1: [
@@ -280,7 +281,6 @@
                 return {
                     bottom: bottom,
                     left: left,
-                    right: right,
                     top: top,
                     lefts: lefts,
                     tops: tops
@@ -352,14 +352,14 @@
                 假设已经移动后的lefts和tops，依次与每个settleCell对比看是否重合
             */
             canMove({
-                lefts,
-                tops
+                ll,
+                tt
             }) {
                 let flag = true,l,t;
-                    for (let i = 0; i < tops.length; i++) {
-                        l = lefts[i]
-                        t = tops[i]
-                        if (this.settleCell.some(function (itm) {
+                    for (let i = 0; i < tt.length; i++) {
+                        l = ll[i]
+                        t = tt[i]
+                        if (Array.from(this.settleCell).some(function (itm) {
                             (itm.top == t) && (itm.left == l)
                         })) {flag = false}
                     }
@@ -373,54 +373,42 @@
             */
             move() {
                 let othis = this
-                let {
-                    lefts,
-                    tops
-                } = this.getActivePos()
                 document.onkeydown = function (e) {
+                    let {lefts:ll,tops:tt}=othis.getActivePos()
                     const key = e.keyCode;
-                    switch (key) {
-                        case 37:
-                            lefts.forEach((itm, index) => lefts[index] = itm - othis.CELLSIZE)
-                            if (othis.canMove({lefts,tops})&& Math.min(lefts) - this.CELLSIZE >= this.playSize.left) {
-                                for (let cell of othis.activeCell) {
-                                    cell.style.left = `${parseInt(cell.style.left) - othis.CELLSIZE}px`
-                                }
+                    if(key==37){
+                        ll.forEach((itm, index) => ll[index] = itm - othis.CELLSIZE)
+                        if (othis.canMove({ll,tt})&& Math.min(...ll) >= othis.playSize.left) {
+                            for (let cell of othis.activeCell) {
+                                cell.style.left = `${parseInt(cell.style.left) - othis.CELLSIZE}px`
                             }
-                            break;
-                        case 38:
-                            let {
-                                tops,
-                                lefts
-                            } = othis.turn();
-                            if (othis.canMove({lefts,tops})&& Math.max(tops) + this.CELLSIZE <= this.playSize.top +this.playSize.height) {
-                                for (let i in othis.activeCell) {
-                                    othis.activeCell[i].style.left = `${lefts[i]}px`;
-                                    othis.activeCell[i].style.top = `${tops[i]}px`
-                                }
+                        }
+                    }else if(key==38){
+                        let {tops:tt,lefts:ll} = othis.turn();
+                        if (othis.canMove({ll,tt})&& Math.max(...tt) + othis.CELLSIZE <= othis.playSize.top +othis.playSize.height) {
+                            for (let i in othis.activeCell) {
+                                othis.activeCell[i].style.left = `${ll[i]}px`;
+                                othis.activeCell[i].style.top = `${tt[i]}px`
                             }
-                            break;
-                        case 39:
-                            lefts.forEach((itm, index) => lefts[index] = itm + othis.CELLSIZE)
-                            if (othis.canMove({lefts,tops})&& Math.max(lefts) + this.CELLSIZE <= this.playSize.left+this.playSize.width){
-                                for (let cell of othis.activeCell) {
-                                    cell.style.left = `${parseInt(cell.style.left)+othis.CELLSIZE}px`
-                                }
+                        }
+                    }else if(key==39){
+                        ll.forEach((itm, index) => ll[index] = itm + othis.CELLSIZE)
+                        if (othis.canMove({ll,tt})&& Math.max(...ll) + othis.CELLSIZE <= othis.playSize.left+othis.playSize.width){
+                            for (let cell of othis.activeCell) {
+                                cell.style.left = `${parseInt(cell.style.left)+othis.CELLSIZE}px`
                             }
-                            break;
-                        case 40:
-                            tops.forEach((itm,index)=>tops[index]=itm+othis.CELLSIZE)
-                            if (othis.canMove({lefts,tops})&&Math.max(tops) + this.CELLSIZE <= this.playSize.top + this.playSize.height) {
-                                for (let cell of othis.activeCell) {
-                                    cell.style.top = `${parseInt(cell.style.top)+othis.CELLSIZE}px`
-                                }
+                        }
+                    }else if(key==40){
+                        tt.forEach((itm,index)=>tt[index]=itm+othis.CELLSIZE)
+                        if (othis.canMove({ll,tt})&&Math.max(...tt) + othis.CELLSIZE <= othis.playSize.top + othis.playSize.height) {
+                            for (let cell of othis.activeCell) {
+                                cell.style.top = `${parseInt(cell.style.top)+othis.CELLSIZE}px`
                             }
-                            break;
-                        default:
-                            break;
+                        }
                     }
                 }
             }
+            
 
 
 
@@ -447,15 +435,16 @@
             init() {
                 this.nowArr = [...this.BLOCK['BLOCK' + Math.round(Math.random() * (7 - 1) + 1)]];
                 this.initDraw(this.nowArr);
-                this.move()
+                // const autoFall=setInterval(function(){
+
+                // },this.speed)
             }
 
         }
         window.onload = () => {
-
             let go = new Tetris();
             go.init()
-            console.log(go.nowArr)
+            go.move()
         }
 
     </script>
