@@ -52,8 +52,8 @@
             height: 480px;
             border-radius: 2px;
             box-shadow: 0 0 8px #000;
-            background-image: linear-gradient(transparent 0, rgba(6, 6, 6, 0.744) 1px),
-                linear-gradient(90deg, transparent 0, rgba(6, 6, 6, 0.744) 1px);
+            background-image: linear-gradient(transparent 0, rgba(6, 6, 6, 0.822) 1px),
+                linear-gradient(90deg, transparent 0, rgba(6, 6, 6, 0.815) 1px);
             background-size: 20px 20px
         }
 
@@ -65,11 +65,11 @@
         }
 
         #play_area .active {
-            background: #666;
+            background: #222;
         }
 
-        #play_are .settle {
-            background: #444
+        #play_area .settle {
+            background: #555
         }
 
 
@@ -121,7 +121,7 @@
         }
 
         button .acc {
-            background: #666;
+            background: #666666;
             color: #eee
         }
 
@@ -179,13 +179,13 @@
         <div id="play_nextType"></div>
         <button
             id="play_btn_start"
-            class='play_btn'
-        >开始
+            class="pause"
+        >PAUSE.
         </button>
         <ul>
-            <li><button>慢</button></li>
-            <li><button>还行</button></li>
-            <li><button>快</button></li>
+            <li><button class='fallSpeed_con'>慢</button></li>
+            <li><button class='fallSpeed_con'>还行</button></li>
+            <li><button class='fallSpeed_con'>快</button></li>
         </ul>
         <div id='play_score'>0</div>
     </nav>
@@ -195,8 +195,9 @@
         class Tetris {
             constructor() {
                 this.activeCell = document.getElementsByClassName('active');
-                this.settleCell = document.getElementsByClassName('settle')
-                this.nowArr = undefined;
+                this.settleCell = document.getElementsByClassName('settle');
+                this.startBtn=document.getElementById('play_btn_start');
+                this.speedConBtn=document.getElementsByClassName('fallSpeed_con')
                 this.playArea = document.getElementById('play_area')
                 this.playSize = {
                     width: 300,
@@ -205,7 +206,11 @@
                     top: this.getDistance(false)
                 }
 
-                this.speed=600;
+                this.nowArr = undefined;
+                this.autoFall=undefined;
+
+                this.speedArr=[900,500,200];
+                this.speed=500
                 this.CELLSIZE = 20;
                 this.BLOCK = {
                     BLOCK1: [
@@ -271,8 +276,8 @@
                 let tops = [],
                     lefts = [];
                 Array.from(this.activeCell).forEach((itm) => {
-                    tops.push(parseInt(itm.style.top))
-                    lefts.push(parseInt(itm.style.left))
+                    tops.push(parseInt(itm.offsetTop))
+                    lefts.push(parseInt(itm.offsetLeft))
                 })
                 let bottom = Math.max(...tops),
                     left = Math.min(...lefts),
@@ -360,8 +365,8 @@
                         l = ll[i]
                         t = tt[i]
                         if (Array.from(this.settleCell).some(function (itm) {
-                            (itm.top == t) && (itm.left == l)
-                        })) {flag = false}
+                            return (itm.offsetTop == t) && (itm.offsetLeft == l)
+                        })){flag = false}
                     }
                 return flag
             }
@@ -380,30 +385,32 @@
                         ll.forEach((itm, index) => ll[index] = itm - othis.CELLSIZE)
                         if (othis.canMove({ll,tt})&& Math.min(...ll) >= othis.playSize.left) {
                             for (let cell of othis.activeCell) {
-                                cell.style.left = `${parseInt(cell.style.left) - othis.CELLSIZE}px`
+                                cell.style.left = `${parseInt(cell.offsetLeft) - othis.CELLSIZE}px`
                             }
                         }
                     }else if(key==38){
                         let {tops:tt,lefts:ll} = othis.turn();
                         if (othis.canMove({ll,tt})&& Math.max(...tt) + othis.CELLSIZE <= othis.playSize.top +othis.playSize.height) {
                             for (let i in othis.activeCell) {
-                                othis.activeCell[i].style.left = `${ll[i]}px`;
-                                othis.activeCell[i].style.top = `${tt[i]}px`
+                                othis.activeCell[i].offsetLeft = `${ll[i]}px`;
+                                othis.activeCell[i].offsetTop = `${tt[i]}px`
                             }
                         }
                     }else if(key==39){
                         ll.forEach((itm, index) => ll[index] = itm + othis.CELLSIZE)
                         if (othis.canMove({ll,tt})&& Math.max(...ll) + othis.CELLSIZE <= othis.playSize.left+othis.playSize.width){
                             for (let cell of othis.activeCell) {
-                                cell.style.left = `${parseInt(cell.style.left)+othis.CELLSIZE}px`
+                                cell.style.left = `${parseInt(cell.offsetLeft)+othis.CELLSIZE}px`
                             }
                         }
                     }else if(key==40){
                         tt.forEach((itm,index)=>tt[index]=itm+othis.CELLSIZE)
                         if (othis.canMove({ll,tt})&&Math.max(...tt) + othis.CELLSIZE <= othis.playSize.top + othis.playSize.height) {
                             for (let cell of othis.activeCell) {
-                                cell.style.top = `${parseInt(cell.style.top)+othis.CELLSIZE}px`
+                                cell.style.top = `${parseInt(cell.offsetTop)+othis.CELLSIZE}px`
                             }
+                        }else{
+                            return true
                         }
                     }
                 }
@@ -416,12 +423,13 @@
              *  新的小方块出现在頂端
              *  @param blcok
              */
-            initDraw(block) {
-                let len = block.length
+            initDraw() {
+                this.nowArr = [...this.BLOCK['BLOCK' + Math.round(Math.random() * (7 - 1) + 1)]];
+                let len = this.nowArr.length
                 for (let i = 0; i < len; i++) {
-                    let rowdex = this.getMidIndexArr(block[i].length)
-                    for (let j = 0; j < block[i].length; j++) {
-                        if (block[i][j] === 1) {
+                    let rowdex = this.getMidIndexArr(this.nowArr[i].length)
+                    for (let j = 0; j < this.nowArr[i].length; j++) {
+                        if (this.nowArr[i][j] === 1) {
                             let newBlock = document.createElement('div')
                             newBlock.className = 'play_cell active'
                             newBlock.style.top = `${this.playSize.top+i*this.CELLSIZE}px`
@@ -432,19 +440,53 @@
                 }
             }
 
-            init() {
-                this.nowArr = [...this.BLOCK['BLOCK' + Math.round(Math.random() * (7 - 1) + 1)]];
-                this.initDraw(this.nowArr);
-                // const autoFall=setInterval(function(){
 
-                // },this.speed)
+
+            goFall(){
+                clearTimeout(this.autoFall)
+                if(document.onkeydown({keyCode:40})){
+                    for(let v of Array.from(this.activeCell)){
+                        v.className=v.className.replace('active','settle')
+                    }
+                    this.start()                        
+                }else{
+                    this.autoFall=setTimeout(this.goFall.bind(this),this.speed)
+                }
+            }
+
+            start(){      
+                this.initDraw();
+                this.autoFall=setTimeout(this.goFall.bind(this),this.speed)
+            }
+
+            toggleGame(){
+                let flag=this.startBtn.className==='start'?true:false;
+                if(flag){
+                    this.startBtn.className='pause';
+                    this.startBtn.innerText='PAUSE.'
+                    this.autoFall=setTimeout(this.goFall.bind(this),this.speed)
+                }else{
+                    this.startBtn.className='start'
+                    this.startBtn.innerText='GO.'
+                    clearTimeout(this.autoFall)
+                }
+            }
+            
+            init() {
+                this.move()
+                this.start()
+                this.startBtn.onclick=this.toggleGame.bind(this)
+                for(let i=0;i<3;i++){
+                    this.speedConBtn[i].onclick=function(){
+                        this.speed=this.speedArr[i]
+                    }.bind(this)
+                }
             }
 
         }
         window.onload = () => {
             let go = new Tetris();
             go.init()
-            go.move()
         }
 
     </script>
