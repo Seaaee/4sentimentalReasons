@@ -47,6 +47,7 @@
         }
 
         #play_area {
+            position: relative;
             display: flex;
             width: 300px;
             height: 480px;
@@ -337,11 +338,11 @@
                     }
                 }
                 // 防止右出界
-                while (Math.max(...lefts) > this.playSize.left + this.playSize.width - 20) {
+                while (Math.max(...lefts) > this.playSize.width - 20) {
                     lefts.forEach((itm, index) => lefts[index] = itm - 20)
                 }
                 // 防止出下届
-                while (Math.max(...tops) > this.playSize.top + this.playSize.height - 20) {
+                while (Math.max(...tops) > this.playSize.height - 20) {
                     tops.forEach((itm, index) => tops[index] = itm - 20)
                 }
                 return {
@@ -383,29 +384,29 @@
                     const key = e.keyCode;
                     if(key==37){
                         ll.forEach((itm, index) => ll[index] = itm - othis.CELLSIZE)
-                        if (othis.canMove({ll,tt})&& Math.min(...ll) >= othis.playSize.left) {
+                        if (othis.canMove({ll,tt})&& Math.min(...ll) >= 0) {
                             for (let cell of othis.activeCell) {
                                 cell.style.left = `${parseInt(cell.offsetLeft) - othis.CELLSIZE}px`
                             }
                         }
                     }else if(key==38){
                         let {tops:tt,lefts:ll} = othis.turn();
-                        if (othis.canMove({ll,tt})&& Math.max(...tt) + othis.CELLSIZE <= othis.playSize.top +othis.playSize.height) {
+                        if (othis.canMove({ll,tt})) {
                             for (let i in othis.activeCell) {
-                                othis.activeCell[i].offsetLeft = `${ll[i]}px`;
-                                othis.activeCell[i].offsetTop = `${tt[i]}px`
+                                othis.activeCell[i].style.left = `${ll[i]}px`;
+                                othis.activeCell[i].style.top = `${tt[i]}px`
                             }
                         }
                     }else if(key==39){
                         ll.forEach((itm, index) => ll[index] = itm + othis.CELLSIZE)
-                        if (othis.canMove({ll,tt})&& Math.max(...ll) + othis.CELLSIZE <= othis.playSize.left+othis.playSize.width){
+                        if (othis.canMove({ll,tt})&& Math.max(...ll) + othis.CELLSIZE <= othis.playSize.width){
                             for (let cell of othis.activeCell) {
                                 cell.style.left = `${parseInt(cell.offsetLeft)+othis.CELLSIZE}px`
                             }
                         }
                     }else if(key==40){
                         tt.forEach((itm,index)=>tt[index]=itm+othis.CELLSIZE)
-                        if (othis.canMove({ll,tt})&&Math.max(...tt) + othis.CELLSIZE <= othis.playSize.top + othis.playSize.height) {
+                        if (othis.canMove({ll,tt})&&Math.max(...tt) + othis.CELLSIZE <=  othis.playSize.height) {
                             for (let cell of othis.activeCell) {
                                 cell.style.top = `${parseInt(cell.offsetTop)+othis.CELLSIZE}px`
                             }
@@ -432,8 +433,8 @@
                         if (this.nowArr[i][j] === 1) {
                             let newBlock = document.createElement('div')
                             newBlock.className = 'play_cell active'
-                            newBlock.style.top = `${this.playSize.top+i*this.CELLSIZE}px`
-                            newBlock.style.left = `${this.playSize.left+(parseInt(this.playSize.width/40)+rowdex[j])*20}px`
+                            newBlock.style.top = `${i*this.CELLSIZE}px`
+                            newBlock.style.left = `${(parseInt(this.playSize.width/40)+rowdex[j])*20}px`
                             this.playArea.appendChild(newBlock)
                         }
                     }
