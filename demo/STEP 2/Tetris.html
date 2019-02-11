@@ -25,6 +25,9 @@
             width: 100%;
             height: 100%
         }
+        p{
+            margin:0
+        }
 
         ul,
         li {
@@ -76,7 +79,6 @@
 
         #play_menu {
             margin-left: 80px;
-            padding-top: 10px;
             font-size: 1rem;
         }
 
@@ -103,6 +105,9 @@
             outline: none;
             cursor: pointer;
             width: 100%;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 0
         }
 
         button:hover {
@@ -132,8 +137,8 @@
 
         #play_btn_start {
             height: 70px;
-            width: 160px;
-            margin: 40px 10px 0;
+            width: 100%;
+            margin: 30px 0 0;
             font-size: 1.3rem;
             color: rgb(36, 61, 88);
             font-weight: bolder;
@@ -141,17 +146,17 @@
 
         #play_menu ul {
             display: flex;
-            margin-top: 20px;
+            margin: 10px 0 30px;
             width: 180px;
-            justify-content: space-evenly
+            justify-content:space-between
         }
 
         #play_menu ul li {
-            width: 50px;
+            width: 55px;
         }
 
         #play_menu ul li button {
-            height: 50px;
+            height: 55px;
             border-radius: 50%
         }
 
@@ -161,11 +166,12 @@
             font-size: 8rem;
             line-height: 160px;
             text-align: center;
-            margin-top: 20px;
             font-weight: bold;
             font-family: Impact, Haettenschweiler, 'Arial Narrow Bold';
         }
-
+        #his{
+            margin-bottom: 25px
+        }
     </style>
 </head>
 
@@ -176,7 +182,7 @@
     >
     </main>
     <nav id='play_menu'>
-        <p>下一个：</p>
+        <p>NEXT：</p>
         <div id="play_nextType"></div>
         <button
             id="play_btn_start"
@@ -184,11 +190,16 @@
         >PAUSE.
         </button>
         <ul>
-            <li><button class='fallSpeed_con'>慢</button></li>
-            <li><button class='fallSpeed_con'>还行</button></li>
-            <li><button class='fallSpeed_con'>快</button></li>
+            <li><button class='fallSpeed_con'>SLOW</button></li>
+            <li><button class='fallSpeed_con'>general</button></li>
+            <li><button class='fallSpeed_con'>FLASH</button></li>
         </ul>
+        <div id='his'>TOP score：
+            <span id="highestScore_history" style='text-align: center'>300</span>
+        </div>
+        <p>NOW SCORE：</p>
         <div id='play_score'>0</div>
+        
     </nav>
     <script>
         'use strict';
@@ -210,7 +221,7 @@
                 this.nowArr = undefined;
                 this.autoFall=undefined;
 
-                this.speedArr=[900,500,200];
+                this.speedArr=[900,550,150];
                 this.speed=500
                 this.CELLSIZE = 20;
                 this.BLOCK = {
@@ -376,6 +387,7 @@
 
             /**
                 移动 move()  this.CELLSIZEpx
+                @return true 不能再下了
             */
             move() {
                 let othis = this
@@ -447,8 +459,13 @@
                 clearTimeout(this.autoFall)
                 if(document.onkeydown({keyCode:40})){
                     for(let v of Array.from(this.activeCell)){
+                        if(!parseInt(v.offsetTop)){// 判断game over
+                            func()
+                            return
+                        }
                         v.className=v.className.replace('active','settle')
                     }
+                    // 判断消除 this.elimate
                     this.start()                        
                 }else{
                     this.autoFall=setTimeout(this.goFall.bind(this),this.speed)
@@ -475,7 +492,7 @@
             
             init() {
                 this.move()
-                this.start()
+                this.start()   
                 this.startBtn.onclick=this.toggleGame.bind(this)
                 for(let i=0;i<3;i++){
                     this.speedConBtn[i].onclick=function(){
