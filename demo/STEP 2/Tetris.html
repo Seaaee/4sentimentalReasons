@@ -56,16 +56,16 @@
             height: 480px;
             border-radius: 2px;
             box-shadow: 0 0 8px #000;
-            background-image: linear-gradient(transparent 0, rgba(6, 6, 6, 0.822) 1px),
-                linear-gradient(90deg, transparent 0, rgba(6, 6, 6, 0.815) 1px);
+            background-image: linear-gradient(rgba(6, 6, 6, 0.822) 0,transparent 1px),
+                linear-gradient(90deg,rgba(6, 6, 6, 0.815) 0, transparent 1px) ;
             background-size: 20px 20px
         }
-
+        .play_cell{
+            position: absolute;
+        }
         #play_area .play_cell {
             width: 19px;
             height: 19px;
-            border: 1px solid transparent;
-            position: absolute;
         }
 
         #play_area .active {
@@ -81,8 +81,12 @@
             margin-left: 80px;
             font-size: 1rem;
         }
+        #play_menu p:first-child{
+            margin-bottom: 40px;
+        }
 
         #play_menu #play_nextType {
+            position: relative;
             width: 60px;
             height: 60px;
         }
@@ -90,6 +94,7 @@
         #play_menu #play_nextType .play_cell {
             width: 14px;
             height: 14px;
+            background: #222
         }
 
         #play_menu #play_nextType .play_cell,
@@ -115,8 +120,6 @@
         }
 
         @keyframes rainbow {
-
-
             0% {
                 background: rgb(225, 234, 250);
             }
@@ -138,7 +141,7 @@
         #play_btn_start {
             height: 70px;
             width: 100%;
-            margin: 30px 0 0;
+            margin: 20px 0 0;
             font-size: 1.3rem;
             color: rgb(36, 61, 88);
             font-weight: bolder;
@@ -162,15 +165,15 @@
 
         #play_score {
             width: 180px;
-            height: 160px;
+            height: 140px;
             font-size: 8rem;
-            line-height: 160px;
+            line-height: 140px;
             text-align: center;
             font-weight: bold;
             font-family: Impact, Haettenschweiler, 'Arial Narrow Bold';
         }
         #his{
-            margin-bottom: 25px
+            margin-bottom: 10px
         }
     </style>
 </head>
@@ -194,10 +197,10 @@
             <li><button class='fallSpeed_con'>general</button></li>
             <li><button class='fallSpeed_con'>FLASH</button></li>
         </ul>
-        <div id='his'>TOP score：
-            <span id="highestScore_history" style='text-align: center'>300</span>
+        <div id='his'>TOP ：
+            <span id="highestScore_history" style='text-align: center'>0</span>
         </div>
-        <p>NOW SCORE：</p>
+        <p>NOW ：</p>
         <div id='play_score'>0</div>
         
     </nav>
@@ -209,16 +212,18 @@
                 this.activeCell = document.getElementsByClassName('active');
                 this.settleCell = document.getElementsByClassName('settle');
                 this.startBtn=document.getElementById('play_btn_start');
-                this.speedConBtn=document.getElementsByClassName('fallSpeed_con')
-                this.playArea = document.getElementById('play_area')
+                this.speedConBtn=document.getElementsByClassName('fallSpeed_con');
+                this.hisScore=document.getElementById('his');
+                this.nowScore=document.getElementById('play_score');
+                this.nextTpyeArea=document.getElementById('play_nextType')
+                this.playArea = document.getElementById('play_area');
                 this.playSize = {
                     width: 300,
-                    height: 480,
-                    left: this.getDistance(true),
-                    top: this.getDistance(false)
+                    height: 480
                 }
 
                 this.nowArr = undefined;
+                this.nextTpye=undefined;
                 this.autoFall=undefined;
 
                 this.speedArr=[900,550,150];
@@ -259,9 +264,7 @@
                     ]
                 }
             }
-            getDistance(r) {
-                return r ? this.playArea.offsetLeft : this.playArea.offsetTop
-            }
+
 
             /**
                 @param len
@@ -278,7 +281,6 @@
                 @return {
                     bottom:bottom,
                     left:left,
-                    right:right,
                     top:top,
                     lefts: lefts,
                     tops: tops
@@ -293,7 +295,6 @@
                 })
                 let bottom = Math.max(...tops),
                     left = Math.min(...lefts),
-                    right = Math.max(...lefts),
                     top = Math.min(...tops);
                 return {
                     bottom: bottom,
@@ -315,7 +316,7 @@
                     tops:tops
                 }
                 left和top数组
-                变形之后的left是之前的left   top是mid top   只有右边可能出界
+                变形之后的left是之前的left   top是mid top  
             */
             turn() {
                 let col = this.nowArr.length,
@@ -428,77 +429,138 @@
                     }
                 }
             }
+
+
+            /**
+                @param array
+                要检查的高度数组
+            */
+            eliminate(array){
+                let count=0;
+                let readToEli=[]
+                for(let i=0;i<array.length;i++){
+                    for(let r of Array.from(this.settleCell)){
+                        if(r.offsetTop===array[i]){
+                            count++
+                            readToEli.push(r)
+                        }
+                    }
+                    if(count>=parseInt(this.playSize.width/20)){
+                        readToEli.forEach((itm)=>this.playArea.removeChild(itm))
+                        for(let m of Array.from(this.settleCell)){
+                            if(m.offsetTop<array[i]){
+                                m.style.top=`${m.offsetTop+20}px`
+                            }
+                        }
+                    }
+                    count=0
+                    readToEli=[]
+                }
+                //v 加分
+            }
             
 
+            gameOver(){
+                document.onkeydown=null;
+                //v this.startBtn= 重新开始
+                //v 计分
+            }
 
+            makeBlock(iLen,jLen,f){
+                let size=f?this.CELLSIZE:15
+                    for (let i = 0; i <iLen; i++) {
+                        let rowdex = this.getMidIndexArr(jLen)
+                        for (let j = 0; j <jLen; j++) {
+                            if (f?(this.nowArr[i][j] === 1):(this.nextTpye[i][j]===1)) {
+                                let newBlock = document.createElement('div')
+                                f?newBlock.className = 'play_cell active':newBlock.className='play_cell'
+                                newBlock.style.top = `${i*size}px`
+                                newBlock.style.left = `${(parseInt(this.playSize.width/(f?40:100))+rowdex[j])*size}px`
+                                f?this.playArea.appendChild(newBlock):this.nextTpyeArea.appendChild(newBlock)
+                            }
+                        }
+                    }
+                }
 
             /**
              *  新的小方块出现在頂端
              *  @param blcok
              */
             initDraw() {
-                this.nowArr = [...this.BLOCK['BLOCK' + Math.round(Math.random() * (7 - 1) + 1)]];
-                let len = this.nowArr.length
-                for (let i = 0; i < len; i++) {
-                    let rowdex = this.getMidIndexArr(this.nowArr[i].length)
-                    for (let j = 0; j < this.nowArr[i].length; j++) {
-                        if (this.nowArr[i][j] === 1) {
-                            let newBlock = document.createElement('div')
-                            newBlock.className = 'play_cell active'
-                            newBlock.style.top = `${i*this.CELLSIZE}px`
-                            newBlock.style.left = `${(parseInt(this.playSize.width/40)+rowdex[j])*20}px`
-                            this.playArea.appendChild(newBlock)
-                        }
-                    }
-                }
+                this.nowArr =[...this.nextTpye];
+                this.nextTpye= [...this.BLOCK['BLOCK' + Math.round(Math.random() * (7 - 1) + 1)]]
+                this.nextTpyeArea.innerHTML=''
+                this.makeBlock(this.nowArr.length,this.nowArr[0].length,true)
+                this.makeBlock(this.nextTpye.length,this.nextTpye[0].length,false)
             }
 
 
 
+            /*
+                定时下落器的function
+                若不能下落 判断gameover
+            */
             goFall(){
                 clearTimeout(this.autoFall)
+                // 如果不能下了
                 if(document.onkeydown({keyCode:40})){
+                    let topsArr=new Set()
                     for(let v of Array.from(this.activeCell)){
-                        if(!parseInt(v.offsetTop)){// 判断game over
+                        // 判断gameover
+                        if(!parseInt(v.offsetTop)){
                             func()
                             return
                         }
+                        // 仅记录本次settle小块的高度用以判断eliminate
+                        topsArr.add(v.offsetTop)
                         v.className=v.className.replace('active','settle')
                     }
-                    // 判断消除 this.elimate
-                    this.start()                        
+                    this.eliminate([...topsArr])
+                    this.newOneFall()                        
                 }else{
                     this.autoFall=setTimeout(this.goFall.bind(this),this.speed)
                 }
             }
 
-            start(){      
-                this.initDraw();
-                this.autoFall=setTimeout(this.goFall.bind(this),this.speed)
-            }
+            
 
+            // toggle 暂停 继续
             toggleGame(){
                 let flag=this.startBtn.className==='start'?true:false;
                 if(flag){
                     this.startBtn.className='pause';
                     this.startBtn.innerText='PAUSE.'
                     this.autoFall=setTimeout(this.goFall.bind(this),this.speed)
+                    if(document.onkeydown==null)this.move()
                 }else{
                     this.startBtn.className='start'
                     this.startBtn.innerText='GO.'
                     clearTimeout(this.autoFall)
+                    document.onkeydown=null
                 }
             }
+
+
+
+            // 新的小块开始
+            newOneFall(){      
+                this.initDraw();
+                this.autoFall=setTimeout(this.goFall.bind(this),this.speed)
+            }
+
             
             init() {
+                this.nextTpye= [...this.BLOCK['BLOCK' + Math.round(Math.random() * (7 - 1) + 1)]]
                 this.move()
-                this.start()   
+                this.newOneFall()   
                 this.startBtn.onclick=this.toggleGame.bind(this)
                 for(let i=0;i<3;i++){
                     this.speedConBtn[i].onclick=function(){
                         this.speed=this.speedArr[i]
                     }.bind(this)
                 }
+                //v 有历史成绩就
+                //v this.hisScore= ? :0
             }
 
         }
