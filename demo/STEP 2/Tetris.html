@@ -115,6 +115,10 @@
             padding: 0
         }
 
+        button.now{
+            background: rgb(225, 234, 250)
+        }
+
         button:hover {
             animation: rainbow 0.8s ease-in infinite alternate;
         }
@@ -194,7 +198,7 @@
         </button>
         <ul>
             <li><button class='fallSpeed_con'>SLOW</button></li>
-            <li><button class='fallSpeed_con'>general</button></li>
+            <li><button class='fallSpeed_con now'>general</button></li>
             <li><button class='fallSpeed_con'>FLASH</button></li>
         </ul>
         <div id='his'>TOP ：
@@ -213,7 +217,7 @@
                 this.settleCell = document.getElementsByClassName('settle');
                 this.startBtn=document.getElementById('play_btn_start');
                 this.speedConBtn=document.getElementsByClassName('fallSpeed_con');
-                this.hisScore=document.getElementById('his');
+                this.hisScore=document.getElementById('highestScore_history');
                 this.nowScore=document.getElementById('play_score');
                 this.nextTpyeArea=document.getElementById('play_nextType')
                 this.playArea = document.getElementById('play_area');
@@ -227,7 +231,7 @@
                 this.autoFall=undefined;
 
                 this.speedArr=[900,550,150];
-                this.speed=500
+                this.speed=550
                 this.CELLSIZE = 20;
                 this.BLOCK = {
                     BLOCK1: [
@@ -431,57 +435,103 @@
             }
 
 
+
+
+
             /**
                 @param array
                 要检查的高度数组
             */
             eliminate(array){
                 let count=0;
-                let readToEli=[]
+                let readyToEli=[]
                 for(let i=0;i<array.length;i++){
+                        // 判断是否消除
                     for(let r of Array.from(this.settleCell)){
                         if(r.offsetTop===array[i]){
                             count++
-                            readToEli.push(r)
+                            readyToEli.push(r)
                         }
                     }
-                    if(count>=parseInt(this.playSize.width/20)){
-                        readToEli.forEach((itm)=>this.playArea.removeChild(itm))
+                    if(count>=parseInt(this.playSize.width/this.CELLSIZE)){
+                        readyToEli.forEach((itm)=>this.playArea.removeChild(itm))
                         for(let m of Array.from(this.settleCell)){
                             if(m.offsetTop<array[i]){
-                                m.style.top=`${m.offsetTop+20}px`
+                                m.style.top=`${m.offsetTop+this.CELLSIZE}px`
                             }
                         }
+                        let speed=this.speed
+                        this.nowScore.innerText=`${parseInt(this.nowScore.innerText)+(this.speedArr.findIndex((itm)=>itm==speed)+1)*20}`
                     }
                     count=0
-                    readToEli=[]
+                    readyToEli=[]
                 }
-                //v 加分
             }
             
 
+
+
+
+
             gameOver(){
-                document.onkeydown=null;
-                //v this.startBtn= 重新开始
-                //v 计分
+                this.toggleGame()
+                this.startBtn.onclick=null;
+                this.startBtn.innerText='PAUSE.'
+                let i=this.playSize.height-20,j=this.playSize.width-20,
+                Othis=this,
+                gameOverAni=setInterval(function(){
+                    if(i<0){
+                        clearInterval(gameOverAni)
+                        restart()
+                        return
+                    }
+                    let oo=document.createElement('div')
+                    oo.className='play_cell settle'
+                    oo.style.top=`${i}px`
+                    oo.style.left=`${j}px`
+                    this.playArea.appendChild(oo)
+                    if(j===0){
+                        i-=this.CELLSIZE;
+                        j=this.playSize.width-20
+                    }else{j-=this.CELLSIZE}
+                }.bind(this),20)
+                function restart(){
+                    Othis.startBtn.innerText='Restart.';
+                    let nowScore=parseInt(Othis.nowScore.innerText),
+                    hisScore=parseInt(Othis.hisScore.innerText)
+                    console.log(nowScore)
+                    if(nowScore>hisScore){
+                        localStorage.setItem('highestScore',nowScore)
+                    }
+                    Othis.startBtn.onclick=Othis.init.bind(Othis)
+                }
             }
 
+
+
+
+
+
+
+            /**
+            @param iLen,jLen,f
+            initDraw专用  f判断是画现在还是下一个arr
+            */
             makeBlock(iLen,jLen,f){
                 let size=f?this.CELLSIZE:15
-                    for (let i = 0; i <iLen; i++) {
-                        let rowdex = this.getMidIndexArr(jLen)
-                        for (let j = 0; j <jLen; j++) {
-                            if (f?(this.nowArr[i][j] === 1):(this.nextTpye[i][j]===1)) {
-                                let newBlock = document.createElement('div')
-                                f?newBlock.className = 'play_cell active':newBlock.className='play_cell'
-                                newBlock.style.top = `${i*size}px`
-                                newBlock.style.left = `${(parseInt(this.playSize.width/(f?40:100))+rowdex[j])*size}px`
-                                f?this.playArea.appendChild(newBlock):this.nextTpyeArea.appendChild(newBlock)
-                            }
+                for (let i = 0; i <iLen; i++) {
+                    let rowdex = this.getMidIndexArr(jLen)
+                    for (let j = 0; j <jLen; j++) {
+                        if (f?(this.nowArr[i][j] === 1):(this.nextTpye[i][j]===1)) {
+                            let newBlock = document.createElement('div')
+                            f?newBlock.className = 'play_cell active':newBlock.className='play_cell'
+                            newBlock.style.top = `${i*size}px`
+                            newBlock.style.left = `${(parseInt(this.playSize.width/(f?40:100))+rowdex[j])*size}px`
+                            f?this.playArea.appendChild(newBlock):this.nextTpyeArea.appendChild(newBlock)
                         }
                     }
                 }
-
+            }
             /**
              *  新的小方块出现在頂端
              *  @param blcok
@@ -508,7 +558,7 @@
                     for(let v of Array.from(this.activeCell)){
                         // 判断gameover
                         if(!parseInt(v.offsetTop)){
-                            func()
+                            this.gameOver()
                             return
                         }
                         // 仅记录本次settle小块的高度用以判断eliminate
@@ -550,17 +600,21 @@
 
             
             init() {
+                this.playArea.innerHTML=''
                 this.nextTpye= [...this.BLOCK['BLOCK' + Math.round(Math.random() * (7 - 1) + 1)]]
                 this.move()
                 this.newOneFall()   
+                this.startBtn.innerText='PAUSE.'
                 this.startBtn.onclick=this.toggleGame.bind(this)
                 for(let i=0;i<3;i++){
                     this.speedConBtn[i].onclick=function(){
+                        Array.from(this.speedConBtn).forEach((itm)=>itm.className='fallSpeed_con')
+                        this.speedConBtn[i].className+=' now'
                         this.speed=this.speedArr[i]
                     }.bind(this)
                 }
-                //v 有历史成绩就
-                //v this.hisScore= ? :0
+                this.nowScore.innerText='0'
+                this.hisScore.innerText=localStorage.getItem('highestScore')||0
             }
 
         }
