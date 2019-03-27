@@ -1,4 +1,8 @@
-;(function(){
+import _ from 'lodash';
+import css from './ll.css';
+import qqq from './qqq.js';
+import $ from 'jquery'
+(function(){
 
 var colors = [
     "#16a085",
@@ -64,10 +68,11 @@ var colors = [
             $("#author").text(r.author);
           }
         );
-        var color = Math.floor(Math.random() * colors.length);
-        $("html body").css("background-color",colors[color])
-        $("html body").css("color",colors[color])
-        $(".button").css("background-color", colors[color]
+        // var color = Math.floor(Math.random() * colors.length);
+        let color =_.sample(colors)
+        $("html body").css("background-color",color)
+        $("html body").css("color",color)
+        $(".button").css("background-color", color
         );
       }
     });
