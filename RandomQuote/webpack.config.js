@@ -36,6 +36,7 @@ module.exports = {
         new CleanWebpackPlugin()
     ],
     externals:{
-        "jquery":"jQuery"
+        "jquery":"jQuery",
+        "lodash":"lodash"
     }
 };
